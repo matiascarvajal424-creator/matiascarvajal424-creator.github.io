@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marcador de Inflación · Mercado de Fichajes 2005–2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --green-deep:#0B2E24;
+  --green-panel:#103A2D;
+  --green-line: rgba(201,162,39,0.22);
+  --chalk:#F1EDE2;
+  --chalk-dim:#C9C2AE;
+  --ink:#0E1612;
+  --gold:#C9A227;
+  --gold-bright:#E7C24A;
+  --clay:#B25438;
+  --slate:#8FA39A;
+  --font-display:'Oswald',sans-serif;
+  --font-body:'Source Serif 4',serif;
+  --font-mono:'Space Mono',monospace;
+  --maxw:1080px;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  background:var(--green-deep);
+  color:var(--chalk);
+  font-family:var(--font-body);
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+}
+body::before{
+  content:"";
+  position:fixed; inset:0;
+  background-image:
+    repeating-linear-gradient(0deg, rgba(255,255,255,0.018) 0px, rgba(255,255,255,0.018) 1px, transparent 1px, transparent 64px),
+    repeating-linear-gradient(90deg, rgba(255,255,255,0.018) 0px, rgba(255,255,255,0.018) 1px, transparent 1px, transparent 64px);
+  pointer-events:none;
+  z-index:0;
+}
+a{color:var(--gold-bright);}
+.wrap{max-width:var(--maxw); margin:0 auto; padding:0 24px; position:relative; z-index:1;}
+.eyebrow{
+  font-family:var(--font-mono);
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  font-size:12px;
+  color:var(--gold);
+}
+h1,h2,h3{
+  font-family:var(--font-display);
+  font-weight:600;
+  letter-spacing:0.01em;
+  margin:0;
+  color:var(--chalk);
+}
+/* ---------- HERO ---------- */
+header.hero{
+  padding:64px 0 40px;
+  border-bottom:1px solid var(--green-line);
+}
+header.hero h1{
+  font-size:clamp(28px,4.6vw,46px);
+  line-height:1.08;
+  margin:14px 0 10px;
+  max-width:780px;
+}
+header.hero .lede{
+  max-width:620px;
+  color:var(--chalk-dim);
+  font-size:16.5px;
+  margin:0 0 36px;
+}
+.scoreboard{
+  background:var(--ink);
+  border:1px solid var(--green-line);
+  border-radius:6px;
+  padding:28px 30px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:28px;
+  align-items:center;
+  justify-content:space-between;
+  position:relative;
+  overflow:hidden;
+}
+.scoreboard::after{
+  content:"";
+  position:absolute; left:0; top:0; bottom:0; width:4px;
+  background:linear-gradient(180deg,var(--gold-bright),var(--gold));
+}
+.sb-left{display:flex; flex-direction:column; gap:6px; min-width:240px;}
+.sb-tag{font-family:var(--font-mono); font-size:11px; letter-spacing:0.1em; color:var(--slate); text-transform:uppercase;}
+.sb-player{font-family:var(--font-display); font-size:22px; color:var(--chalk); font-weight:600;}
+.sb-meta{font-family:var(--font-mono); font-size:12.5px; color:var(--chalk-dim);}
+.flipnum{
+  font-family:var(--font-mono);
+  font-weight:700;
+  font-size:clamp(30px,5vw,50px);
+  color:var(--gold-bright);
+  letter-spacing:0.01em;
+  display:flex;
+  align-items:baseline;
+  gap:6px;
+}
+.flipnum small{font-size:0.42em; color:var(--slate); font-weight:400;}
+.sb-right{display:flex; gap:30px; flex-wrap:wrap;}
+.sb-stat{display:flex; flex-direction:column; gap:3px; min-width:110px;}
+.sb-stat .v{font-family:var(--font-mono); font-size:19px; color:var(--chalk); font-weight:700;}
+.sb-stat .k{font-family:var(--font-mono); font-size:10.5px; color:var(--slate); text-transform:uppercase; letter-spacing:0.08em;}
+.stat-strip{
+  display:flex; gap:36px; margin-top:26px; flex-wrap:wrap;
+}
+.stat-strip .item{display:flex; flex-direction:column; gap:2px;}
+.stat-strip .item .n{font-family:var(--font-display); font-size:26px; color:var(--gold-bright);}
+.stat-strip .item .l{font-family:var(--font-mono); font-size:11px; color:var(--slate); text-transform:uppercase; letter-spacing:0.08em;}
+
+/* ---------- CONTROLS ---------- */
+section.controls{padding:40px 0 18px;}
+.controls-head{display:flex; justify-content:space-between; align-items:baseline; gap:16px; flex-wrap:wrap; margin-bottom:18px;}
+.controls-head h2{font-size:22px;}
+.curr-toggle{display:flex; gap:0; border:1px solid var(--green-line); border-radius:5px; overflow:hidden;}
+.curr-toggle button{
+  font-family:var(--font-mono); font-size:12px; letter-spacing:0.06em;
+  background:transparent; color:var(--chalk-dim); border:none; padding:8px 16px; cursor:pointer;
+}
+.curr-toggle button.active{background:var(--gold); color:var(--ink); font-weight:700;}
+.filters{
+  display:grid;
+  grid-template-columns:1.4fr 0.8fr 0.8fr 1fr;
+  gap:12px;
+  margin-bottom:8px;
+}
+@media (max-width:760px){ .filters{grid-template-columns:1fr 1fr;} }
+.filters label{
+  display:flex; flex-direction:column; gap:6px;
+  font-family:var(--font-mono); font-size:10.5px; color:var(--slate); text-transform:uppercase; letter-spacing:0.07em;
+}
+.filters input, .filters select{
+  background:var(--green-panel);
+  border:1px solid var(--green-line);
+  color:var(--chalk);
+  padding:9px 10px;
+  font-family:var(--font-body);
+  font-size:14.5px;
+  border-radius:4px;
+}
+.filters input:focus, .filters select:focus{outline:1.5px solid var(--gold);}
+.result-count{font-family:var(--font-mono); font-size:12px; color:var(--slate); margin:10px 0 0;}
+
+/* ---------- TABLE ---------- */
+section.ranking{padding:14px 0 50px;}
+.table-scroll{overflow-x:auto; border-top:1px solid var(--green-line);}
+table.ledger{width:100%; border-collapse:collapse; font-size:14px; min-width:760px;}
+table.ledger thead th{
+  text-align:left;
+  font-family:var(--font-mono);
+  font-size:10.5px;
+  letter-spacing:0.07em;
+  text-transform:uppercase;
+  color:var(--slate);
+  padding:12px 10px;
+  border-bottom:1px solid var(--green-line);
+  cursor:pointer;
+  user-select:none;
+  white-space:nowrap;
+}
+table.ledger thead th:hover{color:var(--gold-bright);}
+table.ledger thead th.active{color:var(--gold-bright);}
+table.ledger thead th[data-key="mv"], table.ledger thead th[data-key="fee"], table.ledger thead th[data-key="mult"], table.ledger thead th[data-key="today"]{text-align:right;}
+table.ledger tbody tr{border-bottom:1px solid var(--green-line); cursor:pointer;}
+table.ledger tbody tr:hover{background:rgba(201,162,39,0.06);}
+table.ledger td{padding:11px 10px; vertical-align:top;}
+td.rank{font-family:var(--font-mono); color:var(--slate); width:36px;}
+td.player{font-family:var(--font-display); font-weight:500; color:var(--chalk); font-size:15px;}
+td.player .sub{display:block; font-family:var(--font-body); font-size:12px; color:var(--chalk-dim); font-style:italic; margin-top:1px;}
+td.season{font-family:var(--font-mono); color:var(--chalk-dim); font-size:13px;}
+td.clubs{font-size:13px; color:var(--chalk-dim);}
+td.clubs b{color:var(--chalk); font-weight:600;}
+td.num{font-family:var(--font-mono); text-align:right; white-space:nowrap;}
+td.mult{font-family:var(--font-mono); text-align:right; color:var(--slate); white-space:nowrap;}
+td.today{font-family:var(--font-mono); text-align:right; color:var(--gold-bright); font-weight:700; white-space:nowrap;}
+tr.detail-row td{background:rgba(0,0,0,0.18); padding:0 10px 16px; font-size:13.5px; color:var(--chalk-dim);}
+tr.detail-row .detail-inner{padding:10px 4px 0; border-top:1px dashed var(--green-line);}
+tr.detail-row em{color:var(--gold-bright); font-style:normal; font-family:var(--font-mono);}
+
+/* ---------- COMPARATOR ---------- */
+section.compare{padding:10px 0 60px; border-top:1px solid var(--green-line);}
+section.compare h2{font-size:22px; margin-top:46px; margin-bottom:6px;}
+section.compare .lede{color:var(--chalk-dim); font-size:14.5px; max-width:560px; margin:0 0 22px;}
+.cmp-pickers{display:grid; grid-template-columns:1fr auto 1fr; gap:16px; align-items:center; margin-bottom:24px;}
+.cmp-pickers select{
+  width:100%; background:var(--green-panel); border:1px solid var(--green-line); color:var(--chalk);
+  padding:11px 10px; font-family:var(--font-body); font-size:14.5px; border-radius:4px;
+}
+.cmp-vs{font-family:var(--font-display); color:var(--gold); font-size:18px; text-align:center;}
+@media (max-width:700px){ .cmp-pickers{grid-template-columns:1fr;} .cmp-vs{display:none;} }
+.cmp-cards{display:grid; grid-template-columns:1fr 1fr; gap:18px;}
+@media (max-width:700px){ .cmp-cards{grid-template-columns:1fr;} }
+.cmp-card{background:var(--ink); border:1px solid var(--green-line); border-radius:6px; padding:22px;}
+.cmp-card.winner{border-color:var(--gold);}
+.cmp-card .name{font-family:var(--font-display); font-size:19px; color:var(--chalk);}
+.cmp-card .tag{font-family:var(--font-mono); font-size:11px; color:var(--slate); margin-bottom:14px; text-transform:uppercase;}
+.cmp-card .big{font-family:var(--font-mono); font-size:30px; color:var(--gold-bright); font-weight:700; margin:10px 0 4px;}
+.cmp-card .rowline{display:flex; justify-content:space-between; font-size:13px; color:var(--chalk-dim); padding:5px 0; border-top:1px dashed var(--green-line);}
+.cmp-card .rowline span:last-child{font-family:var(--font-mono); color:var(--chalk);}
+.cmp-conclusion{margin-top:18px; padding:16px 18px; background:rgba(201,162,39,0.08); border-left:3px solid var(--gold); font-size:14.5px; color:var(--chalk-dim);}
+.cmp-conclusion b{color:var(--chalk);}
+
+/* ---------- METHODOLOGY ---------- */
+section.method{padding:10px 0 60px; border-top:1px solid var(--green-line);}
+section.method h2{font-size:22px; margin-bottom:14px;}
+details.panel{border:1px solid var(--green-line); border-radius:6px; margin-bottom:12px; background:var(--green-panel);}
+details.panel summary{
+  padding:14px 18px; cursor:pointer; font-family:var(--font-display); font-size:15px; color:var(--chalk);
+  list-style:none;
+}
+details.panel summary::-webkit-details-marker{display:none;}
+details.panel summary::before{content:"+ "; color:var(--gold);}
+details.panel[open] summary::before{content:"– ";}
+details.panel .panel-body{padding:0 18px 18px; font-size:14px; color:var(--chalk-dim);}
+.rate-table{width:100%; border-collapse:collapse; font-family:var(--font-mono); font-size:12px; margin-top:10px;}
+.rate-table th,.rate-table td{padding:5px 8px; text-align:right; border-bottom:1px solid var(--green-line);}
+.rate-table th:first-child, .rate-table td:first-child{text-align:left;}
+.note{font-size:12.5px; color:var(--slate); margin-top:14px;}
+
+footer{padding:30px 0 60px; border-top:1px solid var(--green-line); font-family:var(--font-mono); font-size:11.5px; color:var(--slate);}
+footer a{color:var(--slate); text-decoration:underline;}
+
+.kbd-focus:focus-visible{outline:2px solid var(--gold-bright); outline-offset:2px;}
+@media (prefers-reduced-motion: reduce){ * {transition:none !important; animation:none !important;} }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<header class="hero">
+  <div class="eyebrow">Mercado de fichajes · análisis de inflación · 2005/06 – 2025/26</div>
+  <h1>¿Cuánto valdría hoy el fichaje más caro de la historia?</h1>
+  <p class="lede">315 traspasos del fútbol europeo, llevados a euros, dólares y pesos chilenos de hoy aplicando la inflación acumulada año a año desde la temporada en que se firmaron.</p>
+
+  <div class="scoreboard" id="hero-scoreboard">
+    <div class="sb-left">
+      <div class="sb-tag">Récord histórico a valor de hoy</div>
+      <div class="sb-player" id="hero-player">—</div>
+      <div class="sb-meta" id="hero-meta">—</div>
+    </div>
+    <div class="flipnum" id="hero-number"><span id="hero-number-val">€0</span><small>valor equivalente hoy</small></div>
+  </div>
+
+  <div class="stat-strip" id="stat-strip"></div>
+</header>
+
+<section class="controls">
+  <div class="controls-head">
+    <h2>Explora los 315 fichajes</h2>
+    <div class="curr-toggle" id="curr-toggle">
+      <button data-cur="EUR" class="active">EUR</button>
+      <button data-cur="USD">USD</button>
+      <button data-cur="CLP">CLP</button>
+    </div>
+  </div>
+  <div class="filters">
+    <label>Buscar jugador o club
+      <input type="text" id="f-search" placeholder="Ej: Mbappé, Real Madrid...">
+    </label>
+    <label>Desde temporada
+      <select id="f-from"></select>
+    </label>
+    <label>Hasta temporada
+      <select id="f-to"></select>
+    </label>
+    <label>Posición
+      <select id="f-pos"><option value="">Todas</option></select>
+    </label>
+  </div>
+  <p class="result-count" id="result-count"></p>
+</section>
+
+<section class="ranking">
+  <div class="table-scroll">
+    <table class="ledger">
+      <thead>
+        <tr>
+          <th data-key="rank">#</th>
+          <th data-key="p">Jugador</th>
+          <th data-key="s">Temp.</th>
+          <th data-key="ct">Traspaso</th>
+          <th data-key="mv">Valor mercado</th>
+          <th data-key="fee">Precio pagado</th>
+          <th data-key="mult">Multiplicador</th>
+          <th data-key="today" class="active">Valor hoy ▼</th>
+        </tr>
+      </thead>
+      <tbody id="table-body"></tbody>
+    </table>
+  </div>
+</section>
+
+<section class="compare">
+  <h2>Comparador de fichajes</h2>
+  <p class="lede">Elige dos traspasos de cualquier época y compáralos a valor presente, una vez eliminado el efecto de la inflación.</p>
+  <div class="cmp-pickers">
+    <select id="cmp-a"></select>
+    <div class="cmp-vs">VS</div>
+    <select id="cmp-b"></select>
+  </div>
+  <div class="cmp-cards" id="cmp-cards"></div>
+  <div class="cmp-conclusion" id="cmp-conclusion"></div>
+</section>
+
+<section class="method">
+  <h2>Metodología y desglose técnico</h2>
+
+  <details class="panel" open>
+    <summary>¿Cómo se calcula el "Valor hoy"?</summary>
+    <div class="panel-body">
+      <p>Cada fichaje se indexa año a año, no con una tasa promedio. Para un traspaso firmado en el año <em>Y</em> (el de inicio de la temporada, p. ej. la 17/18 se indexa desde 2017), se aplica de forma <b>acumulada y sucesiva</b> la tasa de inflación anual de cada año calendario desde <em>Y+1</em> hasta hoy:</p>
+      <p style="font-family:var(--font-mono); color:var(--chalk); font-size:13px;">Multiplicador = (1 + i<sub>Y+1</sub>) × (1 + i<sub>Y+2</sub>) × ... × (1 + i<sub>2025</sub>) × (1 + i<sub>2026 parcial</sub>)</p>
+      <p>Todos los fichajes de esta base están originados en euros, por lo que el ajuste por inflación siempre usa la serie de la <b>Eurozona</b>. Si seleccionas USD o CLP arriba, primero se calcula el valor ajustado en euros y luego se convierte al tipo de cambio de referencia — nunca se mezcla la inflación de una divisa con el monto de otra.</p>
+    </div>
+  </details>
+
+  <details class="panel">
+    <summary>Tasas de inflación anual utilizadas (%)</summary>
+    <div class="panel-body" id="rates-panel"></div>
+  </details>
+
+  <details class="panel">
+    <summary>Tipo de cambio de referencia</summary>
+    <div class="panel-body" id="fx-panel"></div>
+  </details>
+
+  <details class="panel">
+    <summary>Fuentes, límites y advertencias</summary>
+    <div class="panel-body">
+      <p>La metodología sigue el criterio de indexación anual y acumulada de <a href="https://www.global-rates.com/es/calculos/calculadora-de-inflacion/" target="_blank" rel="noopener">global-rates.com</a>. Esta página no tiene acceso a internet en vivo, así que las tasas anuales que ves arriba son cifras públicas de referencia (Eurostat HICP para la Eurozona, BLS CPI para EE. UU., INE para Chile) muy próximas a las de global-rates.com, con los años 2025-2026 estimados parcialmente. Si dispones de la tabla exacta de global-rates.com, puedes reemplazar el objeto <code>RATES</code> en el código de esta página para mayor precisión.</p>
+      <p>Los datos de fichajes (jugador, club, valor de mercado y precio pagado) provienen de la base de datos entregada por el usuario. "Valor de mercado" es la valoración del jugador en el momento del traspaso, no el precio pagado.</p>
+      <p class="note">Esta página es una herramienta de análisis histórico y comparación, no constituye asesoría financiera.</p>
+    </div>
+  </details>
+</section>
+
+</div>
+
+<footer>
+  <div class="wrap" style="padding:0;">
+    Marcador de Inflación de Fichajes · 315 traspasos · temporadas 2005/06–2025/26 · generado a partir de la base de datos de fichajes aportada por el usuario · metodología inspirada en global-rates.com
+  </div>
+</footer>
+
+<script>
+const DATA = [{"p":"Alexander Isak","s":"25/26","sy":2025,"nat":"Suecia","pos":"Delantero","age":25.0,"cf":"Newcastle","ct":"Liverpool","lf":null,"lt":null,"mv":120000000.0,"fee":145000000.0,"fs":null,"cur":"EUR"},{"p":"Florian Wirtz","s":"25/26","sy":2025,"nat":"Alemania","pos":"Mediocampista","age":22.0,"cf":"Bayern Leverkusen","ct":"Liverpool","lf":null,"lt":null,"mv":140000000.0,"fee":125000000.0,"fs":null,"cur":"EUR"},{"p":"Hugo Ekitiké","s":"25/26","sy":2025,"nat":"Francia","pos":"Delantero","age":23.0,"cf":"Eintracht de Fránkfurt","ct":"Liverpool","lf":null,"lt":null,"mv":75000000.0,"fee":95000000.0,"fs":null,"cur":"EUR"},{"p":"Benjamín Sesko","s":"25/26","sy":2025,"nat":"Eslovenia","pos":"Delantero","age":22.0,"cf":"RB Leipzig","ct":"Manchester United","lf":null,"lt":null,"mv":70000000.0,"fee":76500000.0,"fs":null,"cur":"EUR"},{"p":"Victor Osimhen","s":"25/26","sy":2025,"nat":"Nigeria","pos":"Delantero","age":26.0,"cf":"Nápoli","ct":"Galatasaray","lf":null,"lt":null,"mv":70000000.0,"fee":75000000.0,"fs":null,"cur":"EUR"},{"p":"Nick Woltemade","s":"25/26","sy":2025,"nat":"Alemania","pos":"Delantero","age":23.0,"cf":"Stuttgart","ct":"Newcastle","lf":null,"lt":null,"mv":30000000.0,"fee":75000000.0,"fs":null,"cur":"EUR"},{"p":"Bryan Mbeumo","s":"25/26","sy":2025,"nat":"Camerún","pos":"Delantero","age":25.0,"cf":"Brentford","ct":"Manchester United","lf":null,"lt":null,"mv":55000000.0,"fee":75000000.0,"fs":null,"cur":"EUR"},{"p":"Viktor Gyökeres","s":"25/26","sy":2025,"nat":"Suecia","pos":"Delantero","age":27.0,"cf":"Sporting CP","ct":"Arsenal","lf":null,"lt":null,"mv":75000000.0,"fee":66900000.0,"fs":null,"cur":"EUR"},{"p":"Trent Alexander-Arnold","s":"25/26","sy":2025,"nat":"Inglaterra","pos":"Defensa","age":26.0,"cf":"Liverpool","ct":"Real Madrid","lf":null,"lt":null,"mv":75000000.0,"fee":10000000.0,"fs":null,"cur":"EUR"},{"p":"Matheus Cunha","s":"25/26","sy":2025,"nat":"Brasil","pos":"Delantero","age":26.0,"cf":"Wolverhampton","ct":"Manchester United","lf":null,"lt":null,"mv":60000000.0,"fee":74200000.0,"fs":null,"cur":"EUR"},{"p":"Antoine Semenyo","s":"25/26","sy":2025,"nat":"Ghana","pos":"Delantero","age":26.0,"cf":"Bournemouth","ct":"Manchester City","lf":null,"lt":null,"mv":65000000.0,"fee":72000000.0,"fs":null,"cur":"EUR"},{"p":"Martín Zubimendi","s":"25/26","sy":2025,"nat":"España","pos":"Mediocampista","age":26.0,"cf":"Real Sociedad","ct":"Arsenal","lf":null,"lt":null,"mv":60000000.0,"fee":70000000.0,"fs":null,"cur":"EUR"},{"p":"Luis Díaz","s":"25/26","sy":2025,"nat":"Colombia","pos":"Delantero","age":28.0,"cf":"Liverpool","ct":"Bayern Múnich","lf":null,"lt":null,"mv":70000000.0,"fee":70000000.0,"fs":null,"cur":"EUR"},{"p":"Xavi Simons","s":"25/26","sy":2025,"nat":"Países Bajos","pos":"Mediocampista","age":22.0,"cf":"RB Leipzig","ct":"Tottenham","lf":null,"lt":null,"mv":70000000.0,"fee":65000000.0,"fs":null,"cur":"EUR"},{"p":"Eberiche Eze","s":"25/26","sy":2025,"nat":"Inglaterra","pos":"Delantero","age":27.0,"cf":"Crystal Palace","ct":"Arsenal","lf":null,"lt":null,"mv":55000000.0,"fee":69300000.0,"fs":null,"cur":"EUR"},{"p":"Kylian Mbappé","s":"24/25","sy":2024,"nat":"Francia","pos":"Delantero","age":25.0,"cf":"PSG","ct":"Real Madrid","lf":null,"lt":null,"mv":180000000.0,"fee":null,"fs":"Libre (fin de contrato)","cur":"EUR"},{"p":"Victor Osimhen","s":"24/25","sy":2024,"nat":"Nigeria","pos":"Delantero","age":25.0,"cf":"Nápoli","ct":"Galatasaray","lf":null,"lt":null,"mv":100000000.0,"fee":null,"fs":"Cesión","cur":"EUR"},{"p":"Julián Álvarez","s":"24/25","sy":2024,"nat":"Argentina","pos":"Delantero","age":24.0,"cf":"Manchester City","ct":"Atlético de Madrid","lf":null,"lt":null,"mv":90000000.0,"fee":75000000.0,"fs":null,"cur":"EUR"},{"p":"Khvicha Kvaratskhelia","s":"24/25","sy":2024,"nat":"Georgia","pos":"Delantero","age":23.0,"cf":"Nápoli","ct":"PSG","lf":null,"lt":null,"mv":85000000.0,"fee":80000000.0,"fs":null,"cur":"EUR"},{"p":"Xavi Simons","s":"24/25","sy":2024,"nat":"Países Bajos","pos":"Mediocampista","age":21.0,"cf":"PSG","ct":"RB Leipzig","lf":null,"lt":null,"mv":80000000.0,"fee":50000000.0,"fs":null,"cur":"EUR"},{"p":"Jhon Durán","s":"24/25","sy":2024,"nat":"Colombia","pos":"Delantero","age":21.0,"cf":"Aston Villa","ct":"Al-Nassr","lf":null,"lt":null,"mv":40000000.0,"fee":77000000.0,"fs":null,"cur":"EUR"},{"p":"Omar Marmoush","s":"24/25","sy":2024,"nat":"Egipto","pos":"Delantero","age":25.0,"cf":"Eintracht de Fránkfurt","ct":"Manchester City","lf":null,"lt":null,"mv":60000000.0,"fee":75000000.0,"fs":null,"cur":"EUR"},{"p":"Douglas Luiz","s":"24/25","sy":2024,"nat":"Brasil","pos":"Mediocampista","age":26.0,"cf":"Aston Villa","ct":"Juventus","lf":null,"lt":null,"mv":70000000.0,"fee":51500000.0,"fs":null,"cur":"EUR"},{"p":"Matthijs de Ligt","s":"24/25","sy":2024,"nat":"Países Bajos","pos":"Defensa","age":25.0,"cf":"Bayern Múnich","ct":"Manchester United","lf":null,"lt":null,"mv":65000000.0,"fee":45000000.0,"fs":null,"cur":"EUR"},{"p":"Dominic Solanke","s":"24/25","sy":2024,"nat":"Inglaterra","pos":"Delantero","age":26.0,"cf":"Bournemouth","ct":"Tottenham","lf":null,"lt":null,"mv":40000000.0,"fee":64300000.0,"fs":null,"cur":"EUR"},{"p":"Leny Yoro","s":"24/25","sy":2024,"nat":"Francia","pos":"Defensa","age":18.0,"cf":"Lille","ct":"Manchester United","lf":null,"lt":null,"mv":50000000.0,"fee":62000000.0,"fs":null,"cur":"EUR"},{"p":"Dani Olmo","s":"24/25","sy":2024,"nat":"España","pos":"Mediocampista","age":26.0,"cf":"RB Leipzig","ct":"Barcelona","lf":null,"lt":null,"mv":60000000.0,"fee":61000000.0,"fs":null,"cur":"EUR"},{"p":"Nico Gonzáles","s":"24/25","sy":2024,"nat":"España","pos":"Mediocampista","age":23.0,"cf":"Porto","ct":"Manchester City","lf":null,"lt":null,"mv":18000000.0,"fee":60000000.0,"fs":null,"cur":"EUR"},{"p":"Pedro Neto","s":"24/25","sy":2024,"nat":"Portugal","pos":"Delantero","age":24.0,"cf":"Wolverhampton","ct":"Chelsea","lf":null,"lt":null,"mv":55000000.0,"fee":60000000.0,"fs":null,"cur":"EUR"},{"p":"Moussa Diaby","s":"24/25","sy":2024,"nat":"Francia","pos":"Delantero","age":25.0,"cf":"Aston Villa","ct":"Al-Ittihad","lf":null,"lt":null,"mv":55000000.0,"fee":60000000.0,"fs":null,"cur":"EUR"},{"p":"Jude Bellingham","s":"23/24","sy":2023,"nat":"Inglaterra","pos":"Mediocentro ofensivo","age":20.0,"cf":"Dortmund","ct":"Real Madrid","lf":"Bundesliga","lt":"LaLiga","mv":120000000.0,"fee":127000000.0,"fs":null,"cur":"EUR"},{"p":"Declan Rice","s":"23/24","sy":2023,"nat":"Inglaterra","pos":"Mediocentro","age":24.0,"cf":"West Ham","ct":"Arsenal","lf":"Premier League","lt":"Premier League","mv":90000000.0,"fee":116600000.0,"fs":null,"cur":"EUR"},{"p":"Moisés Caicedo","s":"23/24","sy":2023,"nat":"Ecuador","pos":"Pivote","age":21.0,"cf":"Brighton","ct":"Chelsea","lf":"Premier League","lt":"Premier League","mv":75000000.0,"fee":116000000.0,"fs":null,"cur":"EUR"},{"p":"Harry Kane","s":"23/24","sy":2023,"nat":"Inglaterra","pos":"Delantero centro","age":30.0,"cf":"Tottenham","ct":"Bayern","lf":"Premier League","lt":"Bundesliga","mv":90000000.0,"fee":95000000.0,"fs":null,"cur":"EUR"},{"p":"Randal Kolo Muani","s":"23/24","sy":2023,"nat":"Francia","pos":"Delantero centro","age":24.0,"cf":"Eintracht","ct":"PSG","lf":"Bundesliga","lt":"Ligue 1","mv":80000000.0,"fee":95000000.0,"fs":null,"cur":"EUR"},{"p":"Josko Gvardiol","s":"23/24","sy":2023,"nat":"Croacia","pos":"Defensa central","age":21.0,"cf":"Leipzig","ct":"Man. City","lf":"Bundesliga","lt":"Premier League","mv":75000000.0,"fee":90000000.0,"fs":null,"cur":"EUR"},{"p":"Neymar","s":"23/24","sy":2023,"nat":"Brasil","pos":"Mediocentro ofensivo","age":31.0,"cf":"PSG","ct":"Al-Hilal","lf":"Ligue 1","lt":"Saudi Pro League","mv":60000000.0,"fee":90000000.0,"fs":null,"cur":"EUR"},{"p":"Rasmus Højlund","s":"23/24","sy":2023,"nat":"Dinamarca","pos":"Delantero centro","age":20.0,"cf":"Atalanta","ct":"Manchester Utd.","lf":"Serie A","lt":"Premier League","mv":45000000.0,"fee":79800000.0,"fs":null,"cur":"EUR"},{"p":"Kai Havertz","s":"23/24","sy":2023,"nat":"Alemania","pos":"Delantero centro","age":24.0,"cf":"Chelsea","ct":"Arsenal","lf":"Premier League","lt":"Premier League","mv":55000000.0,"fee":75000000.0,"fs":null,"cur":"EUR"},{"p":"Dominik Szoboszlai","s":"23/24","sy":2023,"nat":"Hungría","pos":"Mediocentro ofensivo","age":22.0,"cf":"Leipzig","ct":"Liverpool","lf":"Bundesliga","lt":"Premier League","mv":50000000.0,"fee":70000000.0,"fs":null,"cur":"EUR"},{"p":"Mason Mount","s":"23/24","sy":2023,"nat":"Inglaterra","pos":"Mediocentro ofensivo","age":24.0,"cf":"Chelsea","ct":"Manchester Utd.","lf":"Premier League","lt":"Premier League","mv":60000000.0,"fee":67700000.0,"fs":null,"cur":"EUR"},{"p":"Gonçalo Ramos","s":"23/24","sy":2023,"nat":"Portugal","pos":"Delantero centro","age":22.0,"cf":"Benfica","ct":"PSG","lf":"Liga Portugal","lt":"Ligue 1","mv":50000000.0,"fee":65000000.0,"fs":null,"cur":"EUR"},{"p":"Roméo Lavia","s":"23/24","sy":2023,"nat":"Bélgica","pos":"Pivote","age":19.0,"cf":"Southampton","ct":"Chelsea","lf":"Championship","lt":"Premier League","mv":32000000.0,"fee":62100000.0,"fs":null,"cur":"EUR"},{"p":"Matheus Nunes","s":"23/24","sy":2023,"nat":"Portugal","pos":"Lateral derecho","age":25.0,"cf":"Wolverhampton","ct":"Man. City","lf":"Premier League","lt":"Premier League","mv":45000000.0,"fee":62000000.0,"fs":null,"cur":"EUR"},{"p":"Sandro Tonali","s":"23/24","sy":2023,"nat":"Italia","pos":"Pivote","age":23.0,"cf":"AC Milan","ct":"Newcastle","lf":"Serie A","lt":"Premier League","mv":50000000.0,"fee":60800000.0,"fs":null,"cur":"EUR"},{"p":"Andriy Shevchenko","s":"06/07","sy":2006,"nat":"Ucrania","pos":"Delantero centro","age":29.0,"cf":"AC Milan","ct":"Chelsea","lf":null,"lt":null,"mv":51000000.0,"fee":43880000.0,"fs":null,"cur":"EUR"},{"p":"Michael Carrick","s":"06/07","sy":2006,"nat":"Inglaterra","pos":"Pivote","age":25.0,"cf":"Tottenham","ct":"Manchester Utd.","lf":null,"lt":null,"mv":26500000.0,"fee":27200000.0,"fs":null,"cur":"EUR"},{"p":"Mahamadou Diarra","s":"06/07","sy":2006,"nat":"Malí","pos":"Pivote","age":25.0,"cf":"Lyon","ct":"Real Madrid","lf":null,"lt":null,"mv":20000000.0,"fee":26000000.0,"fs":null,"cur":"EUR"},{"p":"Joaquín","s":"06/07","sy":2006,"nat":"España","pos":"Extremo derecho","age":25.0,"cf":"Real Betis","ct":"Valencia CF","lf":null,"lt":null,"mv":22000000.0,"fee":25000000.0,"fs":null,"cur":"EUR"},{"p":"Zlatan Ibrahimović","s":"06/07","sy":2006,"nat":"Suecia","pos":"Delantero centro","age":24.0,"cf":"Juventus","ct":"Inter","lf":null,"lt":null,"mv":25000000.0,"fee":24800000.0,"fs":null,"cur":"EUR"},{"p":"Sergio Agüero","s":"06/07","sy":2006,"nat":"Argentina","pos":"Delantero centro","age":18.0,"cf":"Independiente","ct":"Atlético","lf":null,"lt":null,"mv":5000000.0,"fee":23000000.0,"fs":null,"cur":"EUR"},{"p":"Fernando Gago","s":"06/07","sy":2006,"nat":"Argentina","pos":"Pivote","age":20.0,"cf":"Boca Juniors","ct":"Real Madrid","lf":null,"lt":null,"mv":12000000.0,"fee":20500000.0,"fs":null,"cur":"EUR"},{"p":"John Obi Mikel","s":"06/07","sy":2006,"nat":"Nigeria","pos":"Pivote","age":19.0,"cf":"Lyn","ct":"Chelsea","lf":null,"lt":null,"mv":null,"fee":20000000.0,"fs":null,"cur":"EUR"},{"p":"Dirk Kuyt","s":"06/07","sy":2006,"nat":"Países Bajos","pos":"Extremo derecho","age":26.0,"cf":"Feyenoord","ct":"Liverpool","lf":null,"lt":null,"mv":18500000.0,"fee":18000000.0,"fs":null,"cur":"EUR"},{"p":"Emerson","s":"06/07","sy":2006,"nat":"Brasil","pos":"Pivote","age":30.0,"cf":"Juventus","ct":"Real Madrid","lf":null,"lt":null,"mv":26000000.0,"fee":16000000.0,"fs":null,"cur":"EUR"},{"p":"Obafemi Martins","s":"06/07","sy":2006,"nat":"Nigeria","pos":"Delantero centro","age":21.0,"cf":"Inter","ct":"Newcastle","lf":null,"lt":null,"mv":12000000.0,"fee":16000000.0,"fs":null,"cur":"EUR"},{"p":"Dimitar Berbatov","s":"06/07","sy":2006,"nat":"Bulgaria","pos":"Delantero centro","age":25.0,"cf":"Leverkusen","ct":"Tottenham","lf":null,"lt":null,"mv":17000000.0,"fee":15700000.0,"fs":null,"cur":"EUR"},{"p":"Ruud van Nistelrooy","s":"06/07","sy":2006,"nat":"Países Bajos","pos":"Delantero centro","age":30.0,"cf":"Manchester Utd.","ct":"Real Madrid","lf":null,"lt":null,"mv":32000000.0,"fee":15000000.0,"fs":null,"cur":"EUR"},{"p":"Ricardo Oliveira","s":"06/07","sy":2006,"nat":"Brasil","pos":"Delantero centro","age":26.0,"cf":"Real Betis","ct":"AC Milan","lf":null,"lt":null,"mv":6000000.0,"fee":15000000.0,"fs":null,"cur":"EUR"},{"p":"Carlos Tévez","s":"06/07","sy":2006,"nat":"Argentina","pos":"Delantero centro","age":22.0,"cf":"Corinthians","ct":"West Ham","lf":null,"lt":null,"mv":15000000.0,"fee":14600000.0,"fs":null,"cur":"EUR"},{"p":"Michael Essien","s":"05/06","sy":2005,"nat":"Ghana","pos":"Pivote","age":22.0,"cf":"Lyon","ct":"Chelsea","lf":null,"lt":null,"mv":23000000.0,"fee":38000000.0,"fs":null,"cur":"EUR"},{"p":"Shaun Wright-Phillips","s":"05/06","sy":2005,"nat":"Inglaterra","pos":"Extremo derecho","age":23.0,"cf":"Man. City","ct":"Chelsea","lf":null,"lt":null,"mv":9500000.0,"fee":31500000.0,"fs":null,"cur":"EUR"},{"p":"Sergio Ramos","s":"05/06","sy":2005,"nat":"España","pos":"Defensa central","age":19.0,"cf":"Sevilla FC","ct":"Real Madrid","lf":null,"lt":null,"mv":27000000.0,"fee":27000000.0,"fs":null,"cur":"EUR"},{"p":"Alberto Gilardino","s":"05/06","sy":2005,"nat":"Italia","pos":"Delantero centro","age":23.0,"cf":"Parma","ct":"AC Milan","lf":null,"lt":null,"mv":20000000.0,"fee":25000000.0,"fs":null,"cur":"EUR"},{"p":"Michael Owen","s":"05/06","sy":2005,"nat":"Inglaterra","pos":"Delantero centro","age":25.0,"cf":"Real Madrid","ct":"Newcastle","lf":null,"lt":null,"mv":22000000.0,"fee":25000000.0,"fs":null,"cur":"EUR"},{"p":"Robinho","s":"05/06","sy":2005,"nat":"Brasil","pos":"Extremo izquierdo","age":21.0,"cf":"Santos","ct":"Real Madrid","lf":null,"lt":null,"mv":25000000.0,"fee":24000000.0,"fs":null,"cur":"EUR"},{"p":"Patrick Vieira","s":"05/06","sy":2005,"nat":"Francia","pos":"Pivote","age":29.0,"cf":"Arsenal","ct":"Juventus","lf":null,"lt":null,"mv":35000000.0,"fee":20000000.0,"fs":null,"cur":"EUR"},{"p":"Júlio Baptista","s":"05/06","sy":2005,"nat":"Brasil","pos":"Mediocentro ofensivo","age":23.0,"cf":"Sevilla FC","ct":"Real Madrid","lf":null,"lt":null,"mv":25000000.0,"fee":20000000.0,"fs":null,"cur":"EUR"},{"p":"Albert Luque","s":"05/06","sy":2005,"nat":"España","pos":"Extremo izquierdo","age":27.0,"cf":"RC Deportivo","ct":"Newcastle","lf":null,"lt":null,"mv":20000000.0,"fee":20000000.0,"fs":null,"cur":"EUR"},{"p":"Walter Samuel","s":"05/06","sy":2005,"nat":"Argentina","pos":"Defensa central","age":27.0,"cf":"Real Madrid","ct":"Inter","lf":null,"lt":null,"mv":18000000.0,"fee":16000000.0,"fs":null,"cur":"EUR"},{"p":"Maniche","s":"05/06","sy":2005,"nat":"Portugal","pos":"Mediocentro","age":27.0,"cf":"Oporto","ct":"Dinamo Moscú","lf":null,"lt":null,"mv":18000000.0,"fee":16000000.0,"fs":null,"cur":"EUR"},{"p":"Fred","s":"05/06","sy":2005,"nat":"Brasil","pos":"Delantero centro","age":21.0,"cf":"Cruzeiro","ct":"Lyon","lf":null,"lt":null,"mv":12000000.0,"fee":15600000.0,"fs":null,"cur":"EUR"},{"p":"Aleksandr Hleb","s":"05/06","sy":2005,"nat":"Bielorsusia","pos":"Mediocentro ofensivo","age":24.0,"cf":"Stuttgart","ct":"Arsenal","lf":null,"lt":null,"mv":7500000.0,"fee":15000000.0,"fs":null,"cur":"EUR"},{"p":"Jermaine Jenas","s":"05/06","sy":2005,"nat":"Inglaterra","pos":"Mediocentro","age":22.0,"cf":"Newcastle","ct":"Tottenham","lf":null,"lt":null,"mv":9000000.0,"fee":15000000.0,"fs":null,"cur":"EUR"},{"p":"Mohamed Sissoko","s":"05/06","sy":2005,"nat":"Malí","pos":"Pivote","age":20.0,"cf":"Valencia CF","ct":"Liverpool","lf":null,"lt":null,"mv":4000000.0,"fee":12000000.0,"fs":null,"cur":"EUR"},{"p":"Fernando Torres","s":"07/08","sy":2007,"nat":"España","pos":"Delantero centro","age":23.0,"cf":"Atlético","ct":"Liverpool","lf":null,"lt":null,"mv":30000000.0,"fee":38000000.0,"fs":null,"cur":"EUR"},{"p":"Arjen Robben","s":"07/08","sy":2007,"nat":"Países Bajos","pos":"Extremo derecho","age":23.0,"cf":"Chelsea","ct":"Real Madrid","lf":null,"lt":null,"mv":22800000.0,"fee":35000000.0,"fs":null,"cur":"EUR"},{"p":"Anderson","s":"07/08","sy":2007,"nat":"Brasil","pos":"Mediocentro","age":19.0,"cf":"Oporto","ct":"Manchester Utd.","lf":null,"lt":null,"mv":25000000.0,"fee":31500000.0,"fs":null,"cur":"EUR"},{"p":"Franck Ribéry","s":"07/08","sy":2007,"nat":"Francia","pos":"Extremo izquierdo","age":24.0,"cf":"Marsella","ct":"Bayern","lf":null,"lt":null,"mv":18000000.0,"fee":30000000.0,"fs":null,"cur":"EUR"},{"p":"Pepe","s":"07/08","sy":2007,"nat":"Portugal","pos":"Defensa central","age":24.0,"cf":"Oporto","ct":"Real Madrid","lf":null,"lt":null,"mv":30000000.0,"fee":30000000.0,"fs":null,"cur":"EUR"},{"p":"Wesley Sneijder","s":"07/08","sy":2007,"nat":"Países Bajos","pos":"Mediocentro ofensivo","age":23.0,"cf":"Ajax","ct":"Real Madrid","lf":null,"lt":null,"mv":14500000.0,"fee":27000000.0,"fs":null,"cur":"EUR"},{"p":"Nani","s":"07/08","sy":2007,"nat":"Portugal","pos":"Extremo izquierdo","age":20.0,"cf":"Sporting CP","ct":"Manchester Utd.","lf":null,"lt":null,"mv":25000000.0,"fee":25500000.0,"fs":null,"cur":"EUR"},{"p":"Owen Hargreaves","s":"07/08","sy":2007,"nat":"Inglaterra","pos":"Pivote","age":26.0,"cf":"Bayern","ct":"Manchester Utd.","lf":null,"lt":null,"mv":25000000.0,"fee":25000000.0,"fs":null,"cur":"EUR"},{"p":"Darren Bent","s":"07/08","sy":2007,"nat":"Inglaterra","pos":"Delantero centro","age":23.0,"cf":"Charlton","ct":"Tottenham","lf":null,"lt":null,"mv":7500000.0,"fee":24750000.0,"fs":null,"cur":"EUR"},{"p":"Thierry Henry","s":"07/08","sy":2007,"nat":"Francia","pos":"Delantero centro","age":29.0,"cf":"Arsenal","ct":"FC Barcelona","lf":null,"lt":null,"mv":45000000.0,"fee":24000000.0,"fs":null,"cur":"EUR"},{"p":"Alexandre Pato","s":"07/08","sy":2007,"nat":"Brasil","pos":"Delantero centro","age":17.0,"cf":"Internacional","ct":"AC Milan","lf":null,"lt":null,"mv":4000000.0,"fee":24000000.0,"fs":null,"cur":"EUR"},{"p":"Diego Forlán","s":"07/08","sy":2007,"nat":"Uruguay","pos":"Delantero centro","age":28.0,"cf":"Villarreal","ct":"Atlético","lf":null,"lt":null,"mv":9000000.0,"fee":21000000.0,"fs":null,"cur":"EUR"},{"p":"Simão","s":"07/08","sy":2007,"nat":"Portugal","pos":"Extremo izquierdo","age":27.0,"cf":"Benfica","ct":"Atlético","lf":null,"lt":null,"mv":15000000.0,"fee":20000000.0,"fs":null,"cur":"EUR"},{"p":"Gabriel Milito","s":"07/08","sy":2007,"nat":"Argentina","pos":"Defensa central","age":26.0,"cf":"Real Zaragoza","ct":"FC Barcelona","lf":null,"lt":null,"mv":20000000.0,"fee":20000000.0,"fs":null,"cur":"EUR"},{"p":"Florent Malouda","s":"07/08","sy":2007,"nat":"Francia","pos":"Extremo izquierdo","age":27.0,"cf":"Lyon","ct":"Chelsea","lf":null,"lt":null,"mv":20000000.0,"fee":19000000.0,"fs":null,"cur":"EUR"},{"p":"Robinho","s":"08/09","sy":2008,"nat":"Brasil","pos":"Extremo izquierdo","age":24.0,"cf":"Real Madrid","ct":"Man. City","lf":"LaLiga","lt":"Premier League","mv":34000000.0,"fee":43000000.0,"fs":null,"cur":"EUR"},{"p":"Dimitar Berbatov","s":"08/09","sy":2008,"nat":"Bulgaria","pos":"Delantero centro","age":27.0,"cf":"Tottenham","ct":"Manchester Utd.","lf":"Premier League","lt":"Premier League","mv":26000000.0,"fee":38000000.0,"fs":null,"cur":"EUR"},{"p":"Dani Alves","s":"08/09","sy":2008,"nat":"Brasil","pos":"Lateral derecho","age":25.0,"cf":"Sevilla FC","ct":"FC Barcelona","lf":"LaLiga","lt":"LaLiga","mv":20000000.0,"fee":35500000.0,"fs":null,"cur":"EUR"},{"p":"Danny","s":"08/09","sy":2008,"nat":"Portugal","pos":"Mediocentro ofensivo","age":25.0,"cf":"Dinamo Moscú","ct":"Zenit","lf":"Premier Liga","lt":"Premier Liga","mv":7750000.0,"fee":30000000.0,"fs":null,"cur":"EUR"},{"p":"Klaas-Jan Huntelaar","s":"08/09","sy":2008,"nat":"Países Bajos","pos":"Delantero centro","age":25.0,"cf":"Ajax","ct":"Real Madrid","lf":"Eredivisie","lt":"LaLiga","mv":20000000.0,"fee":27000000.0,"fs":null,"cur":"EUR"},{"p":"Ricardo Quaresma","s":"08/09","sy":2008,"nat":"Portugal","pos":"Extremo derecho","age":24.0,"cf":"Oporto","ct":"Inter","lf":"Liga Sagres","lt":"Serie A","mv":23000000.0,"fee":24600000.0,"fs":null,"cur":"EUR"},{"p":"Ronaldinho","s":"08/09","sy":2008,"nat":"Brasil","pos":"Extremo izquierdo","age":28.0,"cf":"FC Barcelona","ct":"AC Milan","lf":"LaLiga","lt":"Serie A","mv":35000000.0,"fee":24150000.0,"fs":null,"cur":"EUR"},{"p":"Robbie Keane","s":"08/09","sy":2008,"nat":"Irlanda","pos":"Delantero centro","age":28.0,"cf":"Tottenham","ct":"Liverpool","lf":"Premier League","lt":"Premier League","mv":16500000.0,"fee":24000000.0,"fs":null,"cur":"EUR"},{"p":"Jô","s":"08/09","sy":2008,"nat":"Brasil","pos":"Delantero centro","age":21.0,"cf":"CSKA Moscú","ct":"Man. City","lf":"Premier Liga","lt":"Premier League","mv":17000000.0,"fee":24000000.0,"fs":null,"cur":"EUR"},{"p":"Amauri","s":"08/09","sy":2008,"nat":"Italia","pos":"Delantero centro","age":28.0,"cf":"US Palermo","ct":"Juventus","lf":"Serie A","lt":"Serie A","mv":16000000.0,"fee":22800000.0,"fs":null,"cur":"EUR"},{"p":"Javier Mascherano","s":"08/09","sy":2008,"nat":"Argentina","pos":"Pivote","age":24.0,"cf":"West Ham","ct":"Liverpool","lf":"Premier League","lt":"Premier League","mv":20000000.0,"fee":22500000.0,"fs":null,"cur":"EUR"},{"p":"Luka Modrić","s":"08/09","sy":2008,"nat":"Croacia","pos":"Mediocentro","age":22.0,"cf":"Dinamo Zagreb","ct":"Tottenham","lf":"SuperSport HNL","lt":"Premier League","mv":18000000.0,"fee":22500000.0,"fs":null,"cur":"EUR"},{"p":"David Bentley","s":"08/09","sy":2008,"nat":"Inglaterra","pos":"Interior derecho","age":23.0,"cf":"Blackburn","ct":"Tottenham","lf":"Premier League","lt":"Premier League","mv":12000000.0,"fee":22000000.0,"fs":null,"cur":"EUR"},{"p":"Marouane Fellaini","s":"08/09","sy":2008,"nat":"Bélgica","pos":"Mediocentro","age":20.0,"cf":"Standard Lieja","ct":"Everton","lf":"JPL","lt":"Premier League","mv":7000000.0,"fee":21760000.0,"fs":null,"cur":"EUR"},{"p":"Bosingwa","s":"08/09","sy":2008,"nat":"Portugal","pos":"Lateral derecho","age":25.0,"cf":"Oporto","ct":"Chelsea","lf":"Liga Sagres","lt":"Premier League","mv":17000000.0,"fee":20500000.0,"fs":null,"cur":"EUR"},{"p":"Cristiano Ronaldo","s":"09/10","sy":2009,"nat":"Portugal","pos":"Delantero centro","age":24.0,"cf":"Manchester Utd.","ct":"Real Madrid","lf":null,"lt":null,"mv":60000000.0,"fee":94000000.0,"fs":null,"cur":"EUR"},{"p":"Zlatan Ibrahimović","s":"09/10","sy":2009,"nat":"Suecia","pos":"Delantero centro","age":27.0,"cf":"Inter","ct":"FC Barcelona","lf":null,"lt":null,"mv":45000000.0,"fee":69500000.0,"fs":null,"cur":"EUR"},{"p":"Kaká","s":"09/10","sy":2009,"nat":"Brasil","pos":"Mediocentro ofensivo","age":27.0,"cf":"AC Milan","ct":"Real Madrid","lf":null,"lt":null,"mv":55000000.0,"fee":67000000.0,"fs":null,"cur":"EUR"},{"p":"Karim Benzema","s":"09/10","sy":2009,"nat":"Francia","pos":"Delantero centro","age":21.0,"cf":"Lyon","ct":"Real Madrid","lf":null,"lt":null,"mv":29000000.0,"fee":35000000.0,"fs":null,"cur":"EUR"},{"p":"Xabi Alonso","s":"09/10","sy":2009,"nat":"España","pos":"Pivote","age":27.0,"cf":"Liverpool","ct":"Real Madrid","lf":null,"lt":null,"mv":27000000.0,"fee":34500000.0,"fs":null,"cur":"EUR"},{"p":"Mario Gómez","s":"09/10","sy":2009,"nat":"Alemania","pos":"Delantero centro","age":23.0,"cf":"Stuttgart","ct":"Bayern","lf":null,"lt":null,"mv":30000000.0,"fee":30000000.0,"fs":null,"cur":"EUR"},{"p":"Emmanuel Adebayor","s":"09/10","sy":2009,"nat":"Togo","pos":"Delantero centro","age":25.0,"cf":"Arsenal","ct":"Man. City","lf":null,"lt":null,"mv":25000000.0,"fee":29000000.0,"fs":null,"cur":"EUR"},{"p":"Carlos Tévez","s":"09/10","sy":2009,"nat":"Argentina","pos":"Delantero centro","age":25.0,"cf":"West Ham","ct":"Man. City","lf":null,"lt":null,"mv":25000000.0,"fee":29000000.0,"fs":null,"cur":"EUR"},{"p":"Diego Milito","s":"09/10","sy":2009,"nat":"Argentina","pos":"Delantero centro","age":30.0,"cf":"Génova","ct":"Inter","lf":null,"lt":null,"mv":16000000.0,"fee":28000000.0,"fs":null,"cur":"EUR"},{"p":"Joleon Lescott","s":"09/10","sy":2009,"nat":"Inglaterra","pos":"Defensa central","age":27.0,"cf":"Everton","ct":"Man. City","lf":null,"lt":null,"mv":17000000.0,"fee":27500000.0,"fs":null,"cur":"EUR"},{"p":"Diego","s":"09/10","sy":2009,"nat":"Brasil","pos":"Mediocentro ofensivo","age":24.0,"cf":"Werder Bremen","ct":"Juventus","lf":null,"lt":null,"mv":29000000.0,"fee":27000000.0,"fs":null,"cur":"EUR"},{"p":"Arjen Robben","s":"09/10","sy":2009,"nat":"Países Bajos","pos":"Extremo derecho","age":25.0,"cf":"Real Madrid","ct":"Bayern","lf":null,"lt":null,"mv":30000000.0,"fee":25000000.0,"fs":null,"cur":"EUR"},{"p":"Dmytro Chygrynskyi","s":"09/10","sy":2009,"nat":"Ucrania","pos":"Defensa central","age":22.0,"cf":"Shakhtar D.","ct":"FC Barcelona","lf":null,"lt":null,"mv":13500000.0,"fee":25000000.0,"fs":null,"cur":"EUR"},{"p":"Felipe Melo","s":"09/10","sy":2009,"nat":"Brasil","pos":"Pivote","age":26.0,"cf":"Fiorentina","ct":"Juventus","lf":null,"lt":null,"mv":9500000.0,"fee":25000000.0,"fs":null,"cur":"EUR"},{"p":"Lisandro López","s":"09/10","sy":2009,"nat":"Argentina","pos":"Delantero centro","age":26.0,"cf":"Oporto","ct":"Lyon","lf":null,"lt":null,"mv":16500000.0,"fee":24000000.0,"fs":null,"cur":"EUR"},{"p":"Fernando Torres","s":"10/11","sy":2010,"nat":"España","pos":"Delantero centro","age":26.0,"cf":"Liverpool","ct":"Chelsea","lf":null,"lt":null,"mv":50000000.0,"fee":58500000.0,"fs":null,"cur":"EUR"},{"p":"Andy Carroll","s":"10/11","sy":2010,"nat":"Inglaterra","pos":"Delantero centro","age":22.0,"cf":"Newcastle","ct":"Liverpool","lf":null,"lt":null,"mv":2500000.0,"fee":41000000.0,"fs":null,"cur":"EUR"},{"p":"David Villa","s":"10/11","sy":2010,"nat":"España","pos":"Delantero centro","age":28.0,"cf":"Valencia CF","ct":"FC Barcelona","lf":null,"lt":null,"mv":45000000.0,"fee":40000000.0,"fs":null,"cur":"EUR"},{"p":"Edin Dzeko","s":"10/11","sy":2010,"nat":"Bosnia y Herzegovina","pos":"Delantero centro","age":24.0,"cf":"VfL Wolfsburgo","ct":"Man. City","lf":null,"lt":null,"mv":30000000.0,"fee":37000000.0,"fs":null,"cur":"EUR"},{"p":"Ángel Di María","s":"10/11","sy":2010,"nat":"Argentina","pos":"Extremo derecho","age":22.0,"cf":"Benfica","ct":"Real Madrid","lf":null,"lt":null,"mv":9500000.0,"fee":33000000.0,"fs":null,"cur":"EUR"},{"p":"Yaya Touré","s":"10/11","sy":2010,"nat":"Costa de Marfil","pos":"Mediocentro","age":27.0,"cf":"FC Barcelona","ct":"Man. City","lf":null,"lt":null,"mv":18000000.0,"fee":30000000.0,"fs":null,"cur":"EUR"},{"p":"Mario Balotelli","s":"10/11","sy":2010,"nat":"Italia","pos":"Delantero centro","age":20.0,"cf":"Inter","ct":"Man. City","lf":null,"lt":null,"mv":26000000.0,"fee":29500000.0,"fs":null,"cur":"EUR"},{"p":"David Silva","s":"10/11","sy":2010,"nat":"España","pos":"Mediocentro ofensivo","age":24.0,"cf":"Valencia CF","ct":"Man. City","lf":null,"lt":null,"mv":32000000.0,"fee":28750000.0,"fs":null,"cur":"EUR"},{"p":"Luis Suárez","s":"10/11","sy":2010,"nat":"Uruguay","pos":"Delantero centro","age":24.0,"cf":"Ajax","ct":"Liverpool","lf":null,"lt":null,"mv":25000000.0,"fee":26500000.0,"fs":null,"cur":"EUR"},{"p":"David Luiz","s":"10/11","sy":2010,"nat":"Brasil","pos":"Defensa central","age":23.0,"cf":"Benfica","ct":"Chelsea","lf":null,"lt":null,"mv":14000000.0,"fee":25000000.0,"fs":null,"cur":"EUR"},{"p":"Aleksandar Kolarov","s":"10/11","sy":2010,"nat":"Serbia","pos":"Lateral izquierdo","age":24.0,"cf":"Lazio","ct":"Man. City","lf":null,"lt":null,"mv":9000000.0,"fee":23860000.0,"fs":null,"cur":"EUR"},{"p":"Yoann Gourcuff","s":"10/11","sy":2010,"nat":"Francia","pos":"Mediocentro ofensivo","age":24.0,"cf":"G. Burdeos","ct":"Lyon","lf":null,"lt":null,"mv":22500000.0,"fee":22000000.0,"fs":null,"cur":"EUR"},{"p":"James Milner","s":"10/11","sy":2010,"nat":"Inglaterra","pos":"Mediocentro","age":24.0,"cf":"Aston Villa","ct":"Man. City","lf":null,"lt":null,"mv":20000000.0,"fee":22000000.0,"fs":null,"cur":"EUR"},{"p":"Ramires","s":"10/11","sy":2010,"nat":"Brasil","pos":"Mediocentro","age":23.0,"cf":"Benfica","ct":"Chelsea","lf":null,"lt":null,"mv":14000000.0,"fee":22000000.0,"fs":null,"cur":"EUR"},{"p":"Bruno Alves","s":"10/11","sy":2010,"nat":"Portugal","pos":"Defensa central","age":28.0,"cf":"Oporto","ct":"Zenit","lf":null,"lt":null,"mv":18000000.0,"fee":22000000.0,"fs":null,"cur":"EUR"},{"p":"Javier Pastore","s":"11/12","sy":2011,"nat":"Argentina","pos":"Mediocentro ofensivo","age":22.0,"cf":"US Palermo","ct":"PSG","lf":"Serie A","lt":"Ligue 1","mv":21000000.0,"fee":42000000.0,"fs":null,"cur":"EUR"},{"p":"Radamel Falcao","s":"11/12","sy":2011,"nat":"Colombia","pos":"Delantero centro","age":25.0,"cf":"Oporto","ct":"Atlético","lf":"Liga ZON Sagres","lt":"LaLiga","mv":25000000.0,"fee":40000000.0,"fs":null,"cur":"EUR"},{"p":"Sergio Agüero","s":"11/12","sy":2011,"nat":"Argentina","pos":"Delantero centro","age":23.0,"cf":"Atlético","ct":"Man. City","lf":"LaLiga","lt":"Premier League","mv":36000000.0,"fee":40000000.0,"fs":null,"cur":"EUR"},{"p":"Cesc Fàbregas","s":"11/12","sy":2011,"nat":"España","pos":"Mediocentro","age":24.0,"cf":"Arsenal","ct":"FC Barcelona","lf":"Premier League","lt":"LaLiga","mv":54000000.0,"fee":34000000.0,"fs":null,"cur":"EUR"},{"p":"Manuel Neuer","s":"11/12","sy":2011,"nat":"Alemania","pos":"Portero","age":25.0,"cf":"FC Schalke 04","ct":"Bayern","lf":"Bundesliga","lt":"Bundesliga","mv":28000000.0,"fee":30000000.0,"fs":null,"cur":"EUR"},{"p":"Fábio Coentrão","s":"11/12","sy":2011,"nat":"Portugal","pos":"Lateral izquierdo","age":23.0,"cf":"Benfica","ct":"Real Madrid","lf":"Liga ZON Sagres","lt":"LaLiga","mv":24000000.0,"fee":30000000.0,"fs":null,"cur":"EUR"},{"p":"Samir Nasri","s":"11/12","sy":2011,"nat":"Francia","pos":"Mediocentro ofensivo","age":24.0,"cf":"Arsenal","ct":"Man. City","lf":"Premier League","lt":"Premier League","mv":26000000.0,"fee":27500000.0,"fs":null,"cur":"EUR"},{"p":"Samuel Eto'o","s":"11/12","sy":2011,"nat":"Camerún","pos":"Delantero centro","age":30.0,"cf":"Inter","ct":"Anzhi","lf":"Serie A","lt":"Rusia","mv":42000000.0,"fee":27000000.0,"fs":null,"cur":"EUR"},{"p":"Juan Mata","s":"11/12","sy":2011,"nat":"España","pos":"Mediocentro ofensivo","age":23.0,"cf":"Valencia CF","ct":"Chelsea","lf":"LaLiga","lt":"Premier League","mv":26000000.0,"fee":26700000.0,"fs":null,"cur":"EUR"},{"p":"Alexis Sánchez","s":"11/12","sy":2011,"nat":"Chile","pos":"Mediapunta","age":22.0,"cf":"Udinese","ct":"FC Barcelona","lf":"Serie A","lt":"LaLiga","mv":25000000.0,"fee":26000000.0,"fs":null,"cur":"EUR"},{"p":"David de Gea","s":"11/12","sy":2011,"nat":"España","pos":"Portero","age":20.0,"cf":"Atlético","ct":"Manchester Utd.","lf":"LaLiga","lt":"Premier League","mv":12000000.0,"fee":25000000.0,"fs":null,"cur":"EUR"},{"p":"Zlatan Ibrahimović","s":"11/12","sy":2011,"nat":"Suecia","pos":"Delantero centro","age":29.0,"cf":"FC Barcelona","ct":"AC Milan","lf":"LaLiga","lt":"Serie A","mv":35000000.0,"fee":24000000.0,"fs":null,"cur":"EUR"},{"p":"Santi Cazorla","s":"11/12","sy":2011,"nat":"España","pos":"Mediocentro","age":26.0,"cf":"Villarreal","ct":"Málaga CF","lf":"LaLiga","lt":"LaLiga","mv":18000000.0,"fee":23000000.0,"fs":null,"cur":"EUR"},{"p":"Stewart Downing","s":"11/12","sy":2011,"nat":"Inglaterra","pos":"Interior izquierdo","age":26.0,"cf":"Aston Villa","ct":"Liverpool","lf":"Premier League","lt":"Premier League","mv":12000000.0,"fee":22800000.0,"fs":null,"cur":"EUR"},{"p":"Stephan El Shaarawy","s":"11/12","sy":2011,"nat":"Italia","pos":"Extremo izquierdo","age":18.0,"cf":"Génova","ct":"AC Milan","lf":"Serie A","lt":"Serie A","mv":7000000.0,"fee":20300000.0,"fs":null,"cur":"EUR"},{"p":"Thiago Silva","s":"12/13","sy":2012,"nat":"Brasil","pos":"Defensa central","age":27.0,"cf":"AC Milan","ct":"PSG","lf":"Serie A","lt":"Ligue 1","mv":38000000.0,"fee":42000000.0,"fs":null,"cur":"EUR"},{"p":"Javi Martínez","s":"12/13","sy":2012,"nat":"España","pos":"Defensa central","age":23.0,"cf":"Athletic Club","ct":"Bayern","lf":"LaLiga","lt":"Bundesliga","mv":30000000.0,"fee":40000000.0,"fs":null,"cur":"EUR"},{"p":"Lucas Moura","s":"12/13","sy":2012,"nat":"Brasil","pos":"Extremo derecho","age":20.0,"cf":"São Paulo","ct":"PSG","lf":"Série A","lt":"Ligue 1","mv":35000000.0,"fee":40000000.0,"fs":null,"cur":"EUR"},{"p":"Hulk","s":"12/13","sy":2012,"nat":"Brasil","pos":"Delantero centro","age":26.0,"cf":"Oporto","ct":"Zenit","lf":"Liga ZON Sagres","lt":"Premier Liga","mv":37000000.0,"fee":40000000.0,"fs":null,"cur":"EUR"},{"p":"Axel Witsel","s":"12/13","sy":2012,"nat":"Bélgica","pos":"Pivote","age":23.0,"cf":"Benfica","ct":"Zenit","lf":"Liga ZON Sagres","lt":"Premier Liga","mv":20000000.0,"fee":40000000.0,"fs":null,"cur":"EUR"},{"p":"Luka Modrić","s":"12/13","sy":2012,"nat":"Croacia","pos":"Mediocentro","age":26.0,"cf":"Tottenham","ct":"Real Madrid","lf":"Premier League","lt":"LaLiga","mv":40000000.0,"fee":35000000.0,"fs":null,"cur":"EUR"},{"p":"Eden Hazard","s":"12/13","sy":2012,"nat":"Bélgica","pos":"Extremo izquierdo","age":21.0,"cf":"Lille","ct":"Chelsea","lf":"Ligue 1","lt":"Premier League","mv":33000000.0,"fee":35000000.0,"fs":null,"cur":"EUR"},{"p":"Willian","s":"12/13","sy":2012,"nat":"Brasil","pos":"Extremo izquierdo","age":24.0,"cf":"Shakhtar D.","ct":"Anzhi","lf":"Premier de Ucrania","lt":"Premier Liga","mv":25000000.0,"fee":35000000.0,"fs":null,"cur":"EUR"},{"p":"Oscar","s":"12/13","sy":2012,"nat":"Brasil","pos":"Mediocentro ofensivo","age":20.0,"cf":"Internacional","ct":"Chelsea","lf":"Série A","lt":"Premier League","mv":20000000.0,"fee":32000000.0,"fs":null,"cur":"EUR"},{"p":"Robin van Persie","s":"12/13","sy":2012,"nat":"Países Bajos","pos":"Delantero centro","age":29.0,"cf":"Arsenal","ct":"Manchester Utd.","lf":"Premier League","lt":"Premier League","mv":47500000.0,"fee":30700000.0,"fs":null,"cur":"EUR"},{"p":"Ezequiel Lavezzi","s":"12/13","sy":2012,"nat":"Argentina","pos":"Mediapunta","age":27.0,"cf":"Napoli","ct":"PSG","lf":"Serie A","lt":"Ligue 1","mv":30000000.0,"fee":30000000.0,"fs":null,"cur":"EUR"},{"p":"Zlatan Ibrahimović","s":"12/13","sy":2012,"nat":"Suecia","pos":"Delantero centro","age":30.0,"cf":"AC Milan","ct":"PSG","lf":"Serie A","lt":"Ligue 1","mv":37000000.0,"fee":21000000.0,"fs":null,"cur":"EUR"},{"p":"Javi García","s":"12/13","sy":2012,"nat":"España","pos":"Pivote","age":25.0,"cf":"Benfica","ct":"Man. City","lf":"Liga ZON Sagres","lt":"Premier League","mv":15000000.0,"fee":20200000.0,"fs":null,"cur":"EUR"},{"p":"Mario Balotelli","s":"12/13","sy":2012,"nat":"Italia","pos":"Delantero centro","age":22.0,"cf":"Man. City","ct":"AC Milan","lf":"Premier League","lt":"Serie A","mv":24000000.0,"fee":20000000.0,"fs":null,"cur":"EUR"},{"p":"Alex Song","s":"12/13","sy":2012,"nat":"Camerún","pos":"Pivote","age":24.0,"cf":"Arsenal","ct":"FC Barcelona","lf":"Premier League","lt":"LaLiga","mv":25000000.0,"fee":19000000.0,"fs":null,"cur":"EUR"},{"p":"Gareth Bale","s":"13/14","sy":2013,"nat":"Gales","pos":"Extremo derecho","age":24.0,"cf":"Tottenham","ct":"Real Madrid","lf":"Premier League","lt":"LaLiga","mv":65000000.0,"fee":101000000.0,"fs":null,"cur":"EUR"},{"p":"Neymar","s":"13/14","sy":2013,"nat":"Brasil","pos":"Mediocentro ofensivo","age":21.0,"cf":"Santos","ct":"FC Barcelona","lf":"Série A","lt":"LaLiga","mv":50000000.0,"fee":88000000.0,"fs":null,"cur":"EUR"},{"p":"Edinson Cavani","s":"13/14","sy":2013,"nat":"Uruguay","pos":"Delantero centro","age":26.0,"cf":"Napoli","ct":"PSG","lf":"Serie A","lt":"Ligue 1","mv":55000000.0,"fee":64500000.0,"fs":null,"cur":"EUR"},{"p":"Mesut Özil","s":"13/14","sy":2013,"nat":"Alemania","pos":"Mediocentro ofensivo","age":24.0,"cf":"Real Madrid","ct":"Arsenal","lf":"LaLiga","lt":"Premier League","mv":40000000.0,"fee":47000000.0,"fs":null,"cur":"EUR"},{"p":"James Rodríguez","s":"13/14","sy":2013,"nat":"Colombia","pos":"Mediocentro ofensivo","age":21.0,"cf":"Oporto","ct":"Mónaco","lf":"Liga ZON Sagres","lt":"Ligue 1","mv":23000000.0,"fee":45000000.0,"fs":null,"cur":"EUR"},{"p":"Juan Mata","s":"13/14","sy":2013,"nat":"España","pos":"Mediocentro ofensivo","age":25.0,"cf":"Chelsea","ct":"Manchester Utd.","lf":"Premier League","lt":"Premier League","mv":38000000.0,"fee":44730000.0,"fs":null,"cur":"EUR"},{"p":"Radamel Falcao","s":"13/14","sy":2013,"nat":"Colombia","pos":"Delantero centro","age":27.0,"cf":"Atlético","ct":"Mónaco","lf":"LaLiga","lt":"Ligue 1","mv":60000000.0,"fee":43000000.0,"fs":null,"cur":"EUR"},{"p":"Fernandinho","s":"13/14","sy":2013,"nat":"Brasil","pos":"Pivote","age":28.0,"cf":"Shakhtar D.","ct":"Man. City","lf":"Premier de Ucrania","lt":"Premier League","mv":32000000.0,"fee":40000000.0,"fs":null,"cur":"EUR"},{"p":"Gonzalo Higuaín","s":"13/14","sy":2013,"nat":"Argentina","pos":"Delantero centro","age":25.0,"cf":"Real Madrid","ct":"Napoli","lf":"LaLiga","lt":"Serie A","mv":30000000.0,"fee":39000000.0,"fs":null,"cur":"EUR"},{"p":"Mario Götze","s":"13/14","sy":2013,"nat":"Alemania","pos":"Mediocentro ofensivo","age":21.0,"cf":"Dortmund","ct":"Bayern","lf":"Bundesliga","lt":"Bundesliga","mv":45000000.0,"fee":37000000.0,"fs":null,"cur":"EUR"},{"p":"Willian","s":"13/14","sy":2013,"nat":"Brasil","pos":"Extremo izquierdo","age":25.0,"cf":"Anzhi","ct":"Chelsea","lf":"Premier Liga","lt":"Premier League","mv":30000000.0,"fee":35500000.0,"fs":null,"cur":"EUR"},{"p":"Marouane Fellaini","s":"13/14","sy":2013,"nat":"Bélgica","pos":"Mediocentro","age":25.0,"cf":"Everton","ct":"Manchester Utd.","lf":"Premier League","lt":"Premier League","mv":28000000.0,"fee":32400000.0,"fs":null,"cur":"EUR"},{"p":"Asier Illarramendi","s":"13/14","sy":2013,"nat":"España","pos":"Pivote","age":23.0,"cf":"Real Sociedad","ct":"Real Madrid","lf":"LaLiga","lt":"LaLiga","mv":12000000.0,"fee":32000000.0,"fs":null,"cur":"EUR"},{"p":"Marquinhos","s":"13/14","sy":2013,"nat":"Brasil","pos":"Defensa central","age":19.0,"cf":"AS Roma","ct":"PSG","lf":"Serie A","lt":"Ligue 1","mv":15000000.0,"fee":31400000.0,"fs":null,"cur":"EUR"},{"p":"Roberto Soldado","s":"13/14","sy":2013,"nat":"España","pos":"Delantero centro","age":28.0,"cf":"Valencia CF","ct":"Tottenham","lf":"LaLiga","lt":"Premier League","mv":28000000.0,"fee":30000000.0,"fs":null,"cur":"EUR"},{"p":"Luis Suárez","s":"14/15","sy":2014,"nat":"Uruguay","pos":"Delantero centro","age":27.0,"cf":"Liverpool","ct":"FC Barcelona","lf":"Premier League","lt":"LaLiga","mv":52000000.0,"fee":81720000.0,"fs":null,"cur":"EUR"},{"p":"James Rodríguez","s":"14/15","sy":2014,"nat":"Colombia","pos":"Mediocentro ofensivo","age":23.0,"cf":"Mónaco","ct":"Real Madrid","lf":"Ligue 1","lt":"LaLiga","mv":60000000.0,"fee":75000000.0,"fs":null,"cur":"EUR"},{"p":"Ángel Di María","s":"14/15","sy":2014,"nat":"Argentina","pos":"Extremo derecho","age":26.0,"cf":"Real Madrid","ct":"Manchester Utd.","lf":"LaLiga","lt":"Premier League","mv":50000000.0,"fee":75000000.0,"fs":null,"cur":"EUR"},{"p":"Antoine Griezmann","s":"14/15","sy":2014,"nat":"Francia","pos":"Mediapunta","age":23.0,"cf":"Real Sociedad","ct":"Atlético","lf":"LaLiga","lt":"LaLiga","mv":30000000.0,"fee":54000000.0,"fs":null,"cur":"EUR"},{"p":"David Luiz","s":"14/15","sy":2014,"nat":"Brasíl","pos":"Defensa central","age":27.0,"cf":"Chelsea","ct":"PSG","lf":"Premier League","lt":"Ligue 1","mv":26000000.0,"fee":49500000.0,"fs":null,"cur":"EUR"},{"p":"Eliaquim Mangala","s":"14/15","sy":2014,"nat":"Francia","pos":"Defensa central","age":23.0,"cf":"Oporto","ct":"Man. City","lf":"Liga NOS","lt":"Premier League","mv":28000000.0,"fee":45000000.0,"fs":null,"cur":"EUR"},{"p":"Alexis Sánchez","s":"14/15","sy":2014,"nat":"Chile","pos":"Mediapunta","age":25.0,"cf":"FC Barcelona","ct":"Arsenal","lf":"LaLiga","lt":"Premier League","mv":30000000.0,"fee":42500000.0,"fs":null,"cur":"EUR"},{"p":"Diego Costa","s":"14/15","sy":2014,"nat":"España","pos":"Delantero centro","age":25.0,"cf":"Atlético","ct":"Chelsea","lf":"LaLiga","lt":"Premier League","mv":35000000.0,"fee":38000000.0,"fs":null,"cur":"EUR"},{"p":"Luke Shaw","s":"14/15","sy":2014,"nat":"Inglaterra","pos":"Lateral izquierdo","age":18.0,"cf":"Southampton","ct":"Manchester Utd.","lf":"Premier League","lt":"Premier League","mv":13000000.0,"fee":37500000.0,"fs":null,"cur":"EUR"},{"p":"Ander Herrera","s":"14/15","sy":2014,"nat":"España","pos":"Mediocentro","age":24.0,"cf":"Athletic Club","ct":"Manchester Utd.","lf":"LaLiga","lt":"Premier League","mv":20000000.0,"fee":36000000.0,"fs":null,"cur":"EUR"},{"p":"Romelu Lukaku","s":"14/15","sy":2014,"nat":"Bélgica","pos":"Delantero centro","age":21.0,"cf":"Chelsea","ct":"Everton","lf":"Premier League","lt":"Premier League","mv":25000000.0,"fee":35360000.0,"fs":null,"cur":"EUR"},{"p":"Cesc Fàbregas","s":"14/15","sy":2014,"nat":"España","pos":"Mediocentro","age":27.0,"cf":"FC Barcelona","ct":"Chelsea","lf":"LaLiga","lt":"Premier League","mv":50000000.0,"fee":33000000.0,"fs":null,"cur":"EUR"},{"p":"Wilfried Bony","s":"14/15","sy":2014,"nat":"Costa de Marfíl","pos":"Delantero centro","age":26.0,"cf":"Swansea City","ct":"Man. City","lf":"Premier League","lt":"Premier League","mv":17000000.0,"fee":32299999.999999996,"fs":null,"cur":"EUR"},{"p":"André Schürrle","s":"14/15","sy":2014,"nat":"Alemania","pos":"Extremo izquierdo","age":24.0,"cf":"Chelsea","ct":"VfL Wolfsburgo","lf":"Premier League","lt":"Bundesliga","mv":23000000.0,"fee":32000000.0,"fs":null,"cur":"EUR"},{"p":"Juan Cuadrado","s":"14/15","sy":2014,"nat":"Colombia","pos":"Interior derecho","age":26.0,"cf":"Fiorentina","ct":"Chelsea","lf":"Serie A","lt":"Premier League","mv":32000000.0,"fee":31000000.0,"fs":null,"cur":"EUR"},{"p":"Kevin De Bruyne","s":"15/16","sy":2015,"nat":"Bélgica","pos":"Mediocentro ofensivo","age":24.0,"cf":"VfL Wolfsburgo","ct":"Man. City","lf":"Bundesliga","lt":"Premier League","mv":45000000.0,"fee":76000000.0,"fs":null,"cur":"EUR"},{"p":"Raheem Sterling","s":"15/16","sy":2015,"nat":"Inglaterra","pos":"Extremo derecho","age":20.0,"cf":"Liverpool","ct":"Man. City","lf":"Premier League","lt":"Premier League","mv":40000000.0,"fee":63700000.0,"fs":null,"cur":"EUR"},{"p":"Ángel Di María","s":"15/16","sy":2015,"nat":"Argentina","pos":"Extremo derecho","age":27.0,"cf":"Manchester Utd.","ct":"PSG","lf":"Premier League","lt":"Ligue 1","mv":50000000.0,"fee":63000000.0,"fs":null,"cur":"EUR"},{"p":"Anthony Martial","s":"15/16","sy":2015,"nat":"Francia","pos":"Delantero centro","age":19.0,"cf":"Mónaco","ct":"Manchester Utd.","lf":"Ligue 1","lt":"Premier League","mv":8000000.0,"fee":60000000.0,"fs":null,"cur":"EUR"},{"p":"Alex Teixeira","s":"15/16","sy":2015,"nat":"Brasil","pos":"Mediocentro ofensivo","age":26.0,"cf":"Shakhtar D.","ct":"JS Suning","lf":"Premier de Ucrania","lt":"Super League","mv":30000000.0,"fee":50000000.0,"fs":null,"cur":"EUR"},{"p":"Christian Benteke","s":"15/16","sy":2015,"nat":"Bélgica","pos":"Delantero centro","age":24.0,"cf":"Aston Villa","ct":"Liverpool","lf":"Premier League","lt":"Premier League","mv":20000000.0,"fee":46500000.0,"fs":null,"cur":"EUR"},{"p":"Nicolás Otamendi","s":"15/16","sy":2015,"nat":"Argentina","pos":"Defensa central","age":27.0,"cf":"Valencia CF","ct":"Man. City","lf":"LaLiga","lt":"Premier League","mv":25000000.0,"fee":44500000.0,"fs":null,"cur":"EUR"},{"p":"Julian Draxler","s":"15/16","sy":2015,"nat":"Alemania","pos":"Extremo izquierdo","age":21.0,"cf":"FC Schalke 04","ct":"VfL Wolfsburgo","lf":"Bundesliga","lt":"Bundesliga","mv":22000000.0,"fee":43000000.0,"fs":null,"cur":"EUR"},{"p":"Jackson Martínez","s":"15/16","sy":2015,"nat":"Colombia","pos":"Delantero centro","age":29.0,"cf":"Atlético","ct":"GZ Evergrande","lf":"LaLiga","lt":"Super League","mv":30000000.0,"fee":42000000.0,"fs":null,"cur":"EUR"},{"p":"Roberto Firmino","s":"15/16","sy":2015,"nat":"Brasil","pos":"Delantero centro","age":23.0,"cf":"Hoffenheim","ct":"Liverpool","lf":"Bundesliga","lt":"Premier League","mv":25000000.0,"fee":41000000.0,"fs":null,"cur":"EUR"},{"p":"Paulo Dybala","s":"15/16","sy":2015,"nat":"Argentina","pos":"Mediapunta","age":21.0,"cf":"US Palermo","ct":"Juventus","lf":"Serie A","lt":"Serie A","mv":28000000.0,"fee":41000000.0,"fs":null,"cur":"EUR"},{"p":"Arturo Vidal","s":"15/16","sy":2015,"nat":"Chile","pos":"Mediocentro","age":28.0,"cf":"Juventus","ct":"Bayern","lf":"Serie A","lt":"Bundesliga","mv":42000000.0,"fee":39250000.0,"fs":null,"cur":"EUR"},{"p":"Mateo Kovacic","s":"15/16","sy":2015,"nat":"Croacia","pos":"Mediocentro","age":21.0,"cf":"Inter","ct":"Real Madrid","lf":"Serie A","lt":"LaLiga","mv":22000000.0,"fee":38000000.0,"fs":null,"cur":"EUR"},{"p":"Geoffrey Kondogbia","s":"15/16","sy":2015,"nat":"República Centroafricana","pos":"Pivote","age":22.0,"cf":"Mónaco","ct":"Inter","lf":"Ligue 1","lt":"Serie A","mv":16000000.0,"fee":36000000.0,"fs":null,"cur":"EUR"},{"p":"Jackson Martínez","s":"15/16","sy":2015,"nat":"Colombia","pos":"Delantero centro","age":28.0,"cf":"Oporto","ct":"Atlético","lf":"Liga NOS","lt":"LaLiga","mv":35000000.0,"fee":35000000.0,"fs":null,"cur":"EUR"},{"p":"Paul Pogba","s":"16/17","sy":2016,"nat":"Francia","pos":"Mediocentro","age":23.0,"cf":"Juventus","ct":"Manchester Utd.","lf":"Serie A","lt":"Premier League","mv":70000000.0,"fee":105000000.0,"fs":null,"cur":"EUR"},{"p":"Gonzalo Higuaín","s":"16/17","sy":2016,"nat":"Argentina","pos":"Delantero centro","age":28.0,"cf":"Napoli","ct":"Juventus","lf":"Serie A","lt":"Serie A","mv":65000000.0,"fee":90000000.0,"fs":null,"cur":"EUR"},{"p":"Oscar","s":"16/17","sy":2016,"nat":"Brasíl","pos":"Mediocentro ofensivo","age":25.0,"cf":"Chelsea","ct":"SH SIPG","lf":"Premier League","lt":"Super League","mv":35000000.0,"fee":60000000.0,"fs":null,"cur":"EUR"},{"p":"Hulk","s":"16/17","sy":2016,"nat":"Brasíl","pos":"Delantero centro","age":29.0,"cf":"Zenit","ct":"SH SIPG","lf":"Premier Liga","lt":"Super League","mv":32000000.0,"fee":56000000.0,"fs":null,"cur":"EUR"},{"p":"John Stones","s":"16/17","sy":2016,"nat":"Inglaterra","pos":"Defensa central","age":22.0,"cf":"Everton","ct":"Man. City","lf":"Premier League","lt":"Premier League","mv":28000000.0,"fee":55600000.0,"fs":null,"cur":"EUR"},{"p":"Leroy Sané","s":"16/17","sy":2016,"nat":"Alemania","pos":"Extremo derecho","age":20.0,"cf":"FC Schalke 04","ct":"Man. City","lf":"Bundesliga","lt":"Premier League","mv":30000000.0,"fee":52000000.0,"fs":null,"cur":"EUR"},{"p":"Granit Xhaka","s":"16/17","sy":2016,"nat":"Suiza","pos":"Pivote","age":23.0,"cf":"Bor. M'gladbach","ct":"Arsenal","lf":"Bundesliga","lt":"Premier League","mv":35000000.0,"fee":45000000.0,"fs":null,"cur":"EUR"},{"p":"João Mário","s":"16/17","sy":2016,"nat":"Portugal","pos":"Mediocentro ofensivo","age":23.0,"cf":"Sporting CP","ct":"Inter","lf":"Liga NOS","lt":"Serie A","mv":30000000.0,"fee":44780000.0,"fs":null,"cur":"EUR"},{"p":"Henrikh Mkhitaryan","s":"16/17","sy":2016,"nat":"Armenia","pos":"Mediocentro","age":27.0,"cf":"Dortmund","ct":"Manchester Utd.","lf":"Bundesliga","lt":"Premier League","mv":30000000.0,"fee":42000000.0,"fs":null,"cur":"EUR"},{"p":"Sadio Mané","s":"16/17","sy":2016,"nat":"Senegal","pos":"Extremo izquierdo","age":24.0,"cf":"Southampton","ct":"Liverpool","lf":"Premier League","lt":"Premier League","mv":20000000.0,"fee":41200000.0,"fs":null,"cur":"EUR"},{"p":"Shkodran Mustafi","s":"16/17","sy":2016,"nat":"Alemania","pos":"Defensa central","age":24.0,"cf":"Valencia CF","ct":"Arsenal","lf":"LaLiga","lt":"Premier League","mv":20000000.0,"fee":41000000.0,"fs":null,"cur":"EUR"},{"p":"Michy Batshuayi","s":"16/17","sy":2016,"nat":"Blegica","pos":"Delantero centro","age":22.0,"cf":"Marsella","ct":"Chelsea","lf":"Ligue 1","lt":"Premier League","mv":15000000.0,"fee":39000000.0,"fs":null,"cur":"EUR"},{"p":"Eric Bailly","s":"16/17","sy":2016,"nat":"Costa de Marfíl","pos":"Defensa central","age":22.0,"cf":"Villarreal","ct":"Manchester Utd.","lf":"LaLiga","lt":"Premier League","mv":8000000.0,"fee":38000000.0,"fs":null,"cur":"EUR"},{"p":"André Gomes","s":"16/17","sy":2016,"nat":"Portugal","pos":"Mediocentro","age":22.0,"cf":"Valencia CF","ct":"FC Barcelona","lf":"LaLiga","lt":"LaLiga","mv":30000000.0,"fee":37000000.0,"fs":null,"cur":"EUR"},{"p":"Julian Draxler","s":"16/17","sy":2016,"nat":"Alemania","pos":"Extremo izquierdo","age":23.0,"cf":"VfL Wolfsburgo","ct":"PSG","lf":"Bundesliga","lt":"Ligue 1","mv":28000000.0,"fee":36000000.0,"fs":null,"cur":"EUR"},{"p":"Neymar","s":"17/18","sy":2017,"nat":"Brasil","pos":"Mediocentro ofensivo","age":25.0,"cf":"FC Barcelona","ct":"PSG","lf":"LaLiga","lt":"Ligue 1","mv":100000000.0,"fee":222000000.0,"fs":null,"cur":"EUR"},{"p":"Ousmane Dembélé","s":"17/18","sy":2017,"nat":"Francia","pos":"Delantero centro","age":20.0,"cf":"Dortmund","ct":"FC Barcelona","lf":"Bundesliga","lt":"LaLiga","mv":33000000.0,"fee":148000000.0,"fs":null,"cur":"EUR"},{"p":"Philippe Coutinho","s":"17/18","sy":2017,"nat":"Brasil","pos":"Mediocentro ofensivo","age":25.0,"cf":"Liverpool","ct":"FC Barcelona","lf":"Premier League","lt":"LaLiga","mv":90000000.0,"fee":135000000.0,"fs":null,"cur":"EUR"},{"p":"Romelu Lukaku","s":"17/18","sy":2017,"nat":"Bélgica","pos":"Delantero centro","age":24.0,"cf":"Everton","ct":"Manchester Utd.","lf":"Premier League","lt":"Premier League","mv":50000000.0,"fee":84700000.0,"fs":null,"cur":"EUR"},{"p":"Virgil van Dijk","s":"17/18","sy":2017,"nat":"Países Bajos","pos":"Defensa central","age":26.0,"cf":"Southampton","ct":"Liverpool","lf":"Premier League","lt":"Premier League","mv":30000000.0,"fee":84650000.0,"fs":null,"cur":"EUR"},{"p":"Álvaro Morata","s":"17/18","sy":2017,"nat":"España","pos":"Delantero centro","age":24.0,"cf":"Real Madrid","ct":"Chelsea","lf":"LaLiga","lt":"Premier League","mv":40000000.0,"fee":66000000.0,"fs":null,"cur":"EUR"},{"p":"Aymeric Laporte","s":"17/18","sy":2017,"nat":"España","pos":"Defensa central","age":23.0,"cf":"Athletic Club","ct":"Man. City","lf":"LaLiga","lt":"Premier League","mv":25000000.0,"fee":65000000.0,"fs":null,"cur":"EUR"},{"p":"Pierre-Emerick Aubameyang","s":"17/18","sy":2017,"nat":"Gabón","pos":"Delantero centro","age":28.0,"cf":"Dortmund","ct":"Arsenal","lf":"Bundesliga","lt":"Premier League","mv":65000000.0,"fee":63750000.0,"fs":null,"cur":"EUR"},{"p":"Diego Costa","s":"17/18","sy":2017,"nat":"España","pos":"Delantero centro","age":29.0,"cf":"Chelsea","ct":"Atlético","lf":"Premier League","lt":"LaLiga","mv":50000000.0,"fee":60000000.0,"fs":null,"cur":"EUR"},{"p":"Benjamin Mendy","s":"17/18","sy":2017,"nat":"Francia","pos":"Lateral izquierdo","age":23.0,"cf":"Mónaco","ct":"Man. City","lf":"Ligue 1","lt":"Premier League","mv":13000000.0,"fee":57500000.0,"fs":null,"cur":"EUR"},{"p":"Alexandre Lacazette","s":"17/18","sy":2017,"nat":"Francia","pos":"Delantero centro","age":26.0,"cf":"Lyon","ct":"Arsenal","lf":"Ligue 1","lt":"Premier League","mv":40000000.0,"fee":53000000.0,"fs":null,"cur":"EUR"},{"p":"Kyle Walker","s":"17/18","sy":2017,"nat":"Inglaterra","pos":"Lateral derecho","age":27.0,"cf":"Tottenham","ct":"Man. City","lf":"Premier League","lt":"Premier League","mv":30000000.0,"fee":52700000.0,"fs":null,"cur":"EUR"},{"p":"Bernardo Silva","s":"17/18","sy":2017,"nat":"Portugal","pos":"Mediocentro ofensivo","age":22.0,"cf":"Mónaco","ct":"Man. City","lf":"Ligue 1","lt":"Premier League","mv":40000000.0,"fee":50000000.0,"fs":null,"cur":"EUR"},{"p":"Gylfi Sigurdsson","s":"17/18","sy":2017,"nat":"Islandia","pos":"Mediocentro ofensivo","age":27.0,"cf":"Swansea City","ct":"Everton","lf":"Premier League","lt":"Premier League","mv":25000000.0,"fee":49400000.0,"fs":null,"cur":"EUR"},{"p":"Nemanja Matić","s":"17/18","sy":2017,"nat":"Serbia","pos":"Pivote","age":28.0,"cf":"Chelsea","ct":"Manchester Utd.","lf":"Premier League","lt":"Premier League","mv":35000000.0,"fee":44700000.0,"fs":null,"cur":"EUR"},{"p":"Kylian Mbappé","s":"18/19","sy":2018,"nat":"Francia","pos":"Delantero centro","age":19.0,"cf":"Mónaco","ct":"PSG","lf":null,"lt":null,"mv":120000000.0,"fee":180000000.0,"fs":null,"cur":"EUR"},{"p":"Cristiano Ronaldo","s":"18/19","sy":2018,"nat":"Portugal","pos":"Delantero centro","age":33.0,"cf":"Real Madrid","ct":"Juventus","lf":null,"lt":null,"mv":100000000.0,"fee":117000000.0,"fs":null,"cur":"EUR"},{"p":"Kepa Arrizabalaga","s":"18/19","sy":2018,"nat":"España","pos":"Portero","age":23.0,"cf":"Athletic Club","ct":"Chelsea","lf":null,"lt":null,"mv":20000000.0,"fee":80000000.0,"fs":null,"cur":"EUR"},{"p":"Alisson","s":"18/19","sy":2018,"nat":"Brasil","pos":"Portero","age":25.0,"cf":"AS Roma","ct":"Liverpool","lf":null,"lt":null,"mv":60000000.0,"fee":72500000.0,"fs":null,"cur":"EUR"},{"p":"Thomas Lemar","s":"18/19","sy":2018,"nat":"Francia","pos":"Mediocentro ofensivo","age":22.0,"cf":"Mónaco","ct":"Atlético","lf":null,"lt":null,"mv":65000000.0,"fee":72000000.0,"fs":null,"cur":"EUR"},{"p":"Riyad Mahrez","s":"18/19","sy":2018,"nat":"Argelia","pos":"Extremo derecho","age":27.0,"cf":"Leicester City","ct":"Man. City","lf":null,"lt":null,"mv":50000000.0,"fee":67800000.0,"fs":null,"cur":"EUR"},{"p":"Christian Pulisic","s":"18/19","sy":2018,"nat":"Estados Unidos","pos":"Extremo derecho","age":20.0,"cf":"Dortmund","ct":"Chelsea","lf":null,"lt":null,"mv":50000000.0,"fee":64000000.0,"fs":null,"cur":"EUR"},{"p":"Naby Keïta","s":"18/19","sy":2018,"nat":"Guinea","pos":"Mediocentro","age":23.0,"cf":"Leipzig","ct":"Liverpool","lf":null,"lt":null,"mv":65000000.0,"fee":60000000.0,"fs":null,"cur":"EUR"},{"p":"Fred","s":"18/19","sy":2018,"nat":"Brasil","pos":"Mediocentro","age":25.0,"cf":"Shakhtar D.","ct":"Manchester Utd.","lf":null,"lt":null,"mv":32000000.0,"fee":59000000.0,"fs":null,"cur":"EUR"},{"p":"Jorginho","s":"18/19","sy":2018,"nat":"Italia","pos":"Pivote","age":26.0,"cf":"Napoli","ct":"Chelsea","lf":null,"lt":null,"mv":50000000.0,"fee":57000000.0,"fs":null,"cur":"EUR"},{"p":"Fabinho","s":"18/19","sy":2018,"nat":"Brasil","pos":"Pivote","age":24.0,"cf":"Mónaco","ct":"Liverpool","lf":null,"lt":null,"mv":45000000.0,"fee":45000000.0,"fs":null,"cur":"EUR"},{"p":"Vinicius Junior","s":"18/19","sy":2018,"nat":"Brasil","pos":"Extremo izquierdo","age":18.0,"cf":"Flamengo","ct":"Real Madrid","lf":null,"lt":null,"mv":35000000.0,"fee":45000000.0,"fs":null,"cur":"EUR"},{"p":"Patrik Schick","s":"18/19","sy":2018,"nat":"República Checa","pos":"Delantero centro","age":22.0,"cf":"Sampdoria","ct":"AS Roma","lf":null,"lt":null,"mv":20000000.0,"fee":42000000.0,"fs":null,"cur":"EUR"},{"p":"Paulinho","s":"18/19","sy":2018,"nat":"Brasil","pos":"Mediocentro","age":30.0,"cf":"FC Barcelona","ct":"GZ Evergrande","lf":null,"lt":null,"mv":38000000.0,"fee":42000000.0,"fs":null,"cur":"EUR"},{"p":"Malcom","s":"18/19","sy":2018,"nat":"Brasil","pos":"Extremo derecho","age":21.0,"cf":"G. Burdeos","ct":"FC Barcelona","lf":null,"lt":null,"mv":45000000.0,"fee":41000000.0,"fs":null,"cur":"EUR"},{"p":"João Félix","s":"19/20","sy":2019,"nat":"Portugal","pos":"Mediapunta","age":19.0,"cf":"Benfica","ct":"Atlético","lf":"Liga NOS","lt":"LaLiga","mv":70000000.0,"fee":127200000.0,"fs":null,"cur":"EUR"},{"p":"Eden Hazard","s":"19/20","sy":2019,"nat":"Bélgica","pos":"Extremo izquierdo","age":28.0,"cf":"Chelsea","ct":"Real Madrid","lf":"Premier League","lt":"LaLiga","mv":150000000.0,"fee":120800000.0,"fs":null,"cur":"EUR"},{"p":"Antoine Griezmann","s":"19/20","sy":2019,"nat":"Francia","pos":"Mediapunta","age":28.0,"cf":"Atlético","ct":"FC Barcelona","lf":"LaLiga","lt":"LaLiga","mv":130000000.0,"fee":120000000.0,"fs":null,"cur":"EUR"},{"p":"Harry Maguire","s":"19/20","sy":2019,"nat":"Inglaterra","pos":"Defensa central","age":26.0,"cf":"Leicester City","ct":"Manchester Utd.","lf":"Premier League","lt":"Premier League","mv":50000000.0,"fee":87000000.0,"fs":null,"cur":"EUR"},{"p":"Frenkie de Jong","s":"19/20","sy":2019,"nat":"Países Bajos","pos":"Mediocentro","age":22.0,"cf":"Ajax","ct":"FC Barcelona","lf":"Eredivisie","lt":"LaLiga","mv":85000000.0,"fee":86000000.0,"fs":null,"cur":"EUR"},{"p":"Matthijs de Ligt","s":"19/20","sy":2019,"nat":"Países Bajos","pos":"Defensa central","age":19.0,"cf":"Ajax","ct":"Juventus","lf":"Eredivisie","lt":"Serie A","mv":75000000.0,"fee":85500000.0,"fs":null,"cur":"EUR"},{"p":"Nicolas Pépé","s":"19/20","sy":2019,"nat":"Costa Marfil","pos":"Extremo derecho","age":24.0,"cf":"Lille","ct":"Arsenal","lf":"Ligue 1","lt":"Premier League","mv":65000000.0,"fee":80000000.0,"fs":null,"cur":"EUR"},{"p":"Lucas Hernández","s":"19/20","sy":2019,"nat":"Francia","pos":"Lateral izquierdo","age":23.0,"cf":"Atlético","ct":"Bayern","lf":"LaLiga","lt":"Bundesliga","mv":70000000.0,"fee":80000000.0,"fs":null,"cur":"EUR"},{"p":"Romelu Lukaku","s":"19/20","sy":2019,"nat":"Bélgica","pos":"Delantero centro","age":26.0,"cf":"Manchester Utd.","ct":"Inter","lf":"Premier League","lt":"Serie A","mv":75000000.0,"fee":74000000.0,"fs":null,"cur":"EUR"},{"p":"Rodri","s":"19/20","sy":2019,"nat":"España","pos":"Pivote","age":23.0,"cf":"Atlético","ct":"Man. City","lf":"LaLiga","lt":"Premier League","mv":80000000.0,"fee":70000000.0,"fs":null,"cur":"EUR"},{"p":"João Cancelo","s":"19/20","sy":2019,"nat":"Portugal","pos":"Lateral derecho","age":25.0,"cf":"Juventus","ct":"Man. City","lf":"Serie A","lt":"Premier League","mv":55000000.0,"fee":65000000.0,"fs":null,"cur":"EUR"},{"p":"Bruno Fernandes","s":"19/20","sy":2019,"nat":"Portugal","pos":"Mediocentro ofensivo","age":25.0,"cf":"Sporting CP","ct":"Manchester Utd.","lf":"Liga NOS","lt":"Premier League","mv":60000000.0,"fee":65000000.0,"fs":null,"cur":"EUR"},{"p":"Luka Jović","s":"19/20","sy":2019,"nat":"Serbia","pos":"Delantero centro","age":21.0,"cf":"Eintracht","ct":"Real Madrid","lf":"Bundesliga","lt":"LaLiga","mv":60000000.0,"fee":63000000.0,"fs":null,"cur":"EUR"},{"p":"Tanguy Ndombélé","s":"19/20","sy":2019,"nat":"Francia","pos":"Mediocentro","age":22.0,"cf":"Lyon","ct":"Tottenham","lf":"Ligue 1","lt":"Premier League","mv":65000000.0,"fee":62000000.0,"fs":null,"cur":"EUR"},{"p":"Aaron Wan-Bissaka","s":"19/20","sy":2019,"nat":"Inglaterra","pos":"Lateral derecho","age":21.0,"cf":"Crystal Palace","ct":"Manchester Utd.","lf":"Premier League","lt":"Premier League","mv":35000000.0,"fee":55000000.0,"fs":null,"cur":"EUR"},{"p":"Kai Havertz","s":"20/21","sy":2020,"nat":"Alemania","pos":"Delantero centro","age":21.0,"cf":"Leverkusen","ct":"Chelsea","lf":"Bundesliga","lt":"Premier League","mv":81000000.0,"fee":100000000.0,"fs":null,"cur":"EUR"},{"p":"Arthur Melo","s":"20/21","sy":2020,"nat":"Brasíl","pos":"Mediocentro","age":24.0,"cf":"FC Barcelona","ct":"Juventus","lf":"LaLiga","lt":"Serie A","mv":56000000.0,"fee":80600000.0,"fs":null,"cur":"EUR"},{"p":"Victor Osimhen","s":"20/21","sy":2020,"nat":"Nigeria","pos":"Delantero centro","age":21.0,"cf":"Lille","ct":"Napoli","lf":"Ligue 1","lt":"Serie A","mv":40000000.0,"fee":78900000.0,"fs":null,"cur":"EUR"},{"p":"Rúben Dias","s":"20/21","sy":2020,"nat":"Portugal","pos":"Defensa central","age":23.0,"cf":"Benfica","ct":"Man. City","lf":"Liga NOS","lt":"Premier League","mv":35000000.0,"fee":71600000.0,"fs":null,"cur":"EUR"},{"p":"Miralem Pjanić","s":"20/21","sy":2020,"nat":"Bosnia","pos":"Mediocentro","age":30.0,"cf":"Juventus","ct":"FC Barcelona","lf":"Serie A","lt":"LaLiga","mv":45000000.0,"fee":60000000.0,"fs":null,"cur":"EUR"},{"p":"Timo Werner","s":"20/21","sy":2020,"nat":"Alemania","pos":"Delantero centro","age":24.0,"cf":"Leipzig","ct":"Chelsea","lf":"Bundesliga","lt":"Premier League","mv":64000000.0,"fee":53000000.0,"fs":null,"cur":"EUR"},{"p":"Ben Chilwell","s":"20/21","sy":2020,"nat":"Inglaterra","pos":"Lateral izquierdo","age":23.0,"cf":"Leicester City","ct":"Chelsea","lf":"Premier League","lt":"Premier League","mv":40000000.0,"fee":50200000.0,"fs":null,"cur":"EUR"},{"p":"Mauro Icardi","s":"20/21","sy":2020,"nat":"Argentina","pos":"Delantero centro","age":27.0,"cf":"Inter","ct":"PSG","lf":"Serie A","lt":"Ligue 1","mv":60000000.0,"fee":50000000.0,"fs":null,"cur":"EUR"},{"p":"Thomas Partey","s":"20/21","sy":2020,"nat":"Francia","pos":"Pivote","age":27.0,"cf":"Atlético","ct":"Arsenal","lf":"LaLiga","lt":"Premier League","mv":40000000.0,"fee":50000000.0,"fs":null,"cur":"EUR"},{"p":"Leroy Sané","s":"20/21","sy":2020,"nat":"Alemania","pos":"Extremo derecho","age":24.0,"cf":"Man. City","ct":"Bayern","lf":"Premier League","lt":"Bundesliga","mv":80000000.0,"fee":49000000.0,"fs":null,"cur":"EUR"},{"p":"Nathan Aké","s":"20/21","sy":2020,"nat":"Holanda","pos":"Defensa central","age":25.0,"cf":"Bournemouth","ct":"Man. City","lf":"Championship","lt":"Premier League","mv":28000000.0,"fee":45300000.0,"fs":null,"cur":"EUR"},{"p":"Diogo Jota","s":"20/21","sy":2020,"nat":"Portugal","pos":"Extremo izquierdo","age":23.0,"cf":"Wolverhampton","ct":"Liverpool","lf":"Premier League","lt":"Premier League","mv":28000000.0,"fee":44700000.0,"fs":null,"cur":"EUR"},{"p":"Achraf Hakimi","s":"20/21","sy":2020,"nat":"Marruecos","pos":"Lateral derecho","age":21.0,"cf":"Real Madrid","ct":"Inter","lf":"LaLiga","lt":"Serie A","mv":54000000.0,"fee":43000000.0,"fs":null,"cur":"EUR"},{"p":"Fábio Silva","s":"20/21","sy":2020,"nat":"Portugal","pos":"Delantero centro","age":18.0,"cf":"Oporto","ct":"Wolverhampton","lf":"Liga NOS","lt":"Premier League","mv":12000000.0,"fee":40000000.0,"fs":null,"cur":"EUR"},{"p":"Hakim Ziyech","s":"20/21","sy":2020,"nat":"Marruecos","pos":"Extremo derecho","age":27.0,"cf":"Ajax","ct":"Chelsea","lf":"Eredivisie","lt":"Premier League","mv":40000000.0,"fee":40000000.0,"fs":null,"cur":"EUR"},{"p":"Jack Grealish","s":"21/22","sy":2021,"nat":"Inglaterra","pos":"Extremo izquierdo","age":25.0,"cf":"Aston Villa","ct":"Man. City","lf":"Premier League","lt":"Premier League","mv":65000000.0,"fee":117500000.0,"fs":null,"cur":"EUR"},{"p":"Romelu Lukaku","s":"21/22","sy":2021,"nat":"Bélgica","pos":"Delantero centro","age":28.0,"cf":"Inter","ct":"Chelsea","lf":"Serie A","lt":"Premier League","mv":100000000.0,"fee":113000000.0,"fs":null,"cur":"EUR"},{"p":"Dušan Vlahović","s":"21/22","sy":2021,"nat":"Serbia","pos":"Delantero centro","age":22.0,"cf":"Fiorentina","ct":"Juventus","lf":"Serie A","lt":"Serie A","mv":70000000.0,"fee":85400000.0,"fs":null,"cur":"EUR"},{"p":"Jadon Sancho","s":"21/22","sy":2021,"nat":"Inglaterra","pos":"Extremo izquierdo","age":21.0,"cf":"Dortmund","ct":"Manchester Utd.","lf":"Bundesliga","lt":"Premier League","mv":100000000.0,"fee":85000000.0,"fs":null,"cur":"EUR"},{"p":"Achraf Hakimi","s":"21/22","sy":2021,"nat":"Marruecos","pos":"Lateral derecho","age":22.0,"cf":"Inter","ct":"PSG","lf":"Serie A","lt":"Ligue 1","mv":60000000.0,"fee":68000000.0,"fs":null,"cur":"EUR"},{"p":"Ben White","s":"21/22","sy":2021,"nat":"Inglaterra","pos":"Lateral derecho","age":23.0,"cf":"Brighton","ct":"Arsenal","lf":"Premier League","lt":"Premier League","mv":28000000.0,"fee":58500000.0,"fs":null,"cur":"EUR"},{"p":"Ferran Torres","s":"21/22","sy":2021,"nat":"España","pos":"Delantero centro","age":21.0,"cf":"Man. City","ct":"FC Barcelona","lf":"Premier League","lt":"LaLiga","mv":45000000.0,"fee":55000000.0,"fs":null,"cur":"EUR"},{"p":"Luis Díaz","s":"21/22","sy":2021,"nat":"Colombia","pos":"Extremo izquierdo","age":25.0,"cf":"Oporto","ct":"Liverpool","lf":"Liga Portugal","lt":"Premier League","mv":40000000.0,"fee":49000000.0,"fs":null,"cur":"EUR"},{"p":"Dayot Upamecano","s":"21/22","sy":2021,"nat":"Francia","pos":"Defensa central","age":22.0,"cf":"Leipzig","ct":"Bayern","lf":"Bundesliga","lt":"Bundesliga","mv":60000000.0,"fee":42500000.0,"fs":null,"cur":"EUR"},{"p":"Bruno Guimarães","s":"21/22","sy":2021,"nat":"Brasíl","pos":"Mediocentro","age":24.0,"cf":"Lyon","ct":"Newcastle","lf":"Ligue 1","lt":"Premier League","mv":30000000.0,"fee":42100000.0,"fs":null,"cur":"EUR"},{"p":"Tammy Abraham","s":"21/22","sy":2021,"nat":"Inglaterra","pos":"Delantero centro","age":23.0,"cf":"Chelsea","ct":"AS Roma","lf":"Premier League","lt":"Serie A","mv":38000000.0,"fee":41000000.0,"fs":null,"cur":"EUR"},{"p":"Raphaël Varane","s":"21/22","sy":2021,"nat":"Francia","pos":"Defensa central","age":28.0,"cf":"Real Madrid","ct":"Manchester Utd.","lf":"LaLiga","lt":"Premier League","mv":70000000.0,"fee":40000000.0,"fs":null,"cur":"EUR"},{"p":"Ibrahima Konaté","s":"21/22","sy":2021,"nat":"Francia","pos":"Defensa central","age":22.0,"cf":"Leipzig","ct":"Liverpool","lf":"Bundesliga","lt":"Premier League","mv":35000000.0,"fee":40000000.0,"fs":null,"cur":"EUR"},{"p":"Emiliano Buendía","s":"21/22","sy":2021,"nat":"Argentina","pos":"Extremo izquierdo","age":24.0,"cf":"Norwich","ct":"Aston Villa","lf":"Premier League","lt":"Premier League","mv":35000000.0,"fee":38400000.0,"fs":null,"cur":"EUR"},{"p":"Josko Gvardiol","s":"21/22","sy":2021,"nat":"Croacia","pos":"Defensa central","age":19.0,"cf":"Dinamo Zagreb","ct":"Leipzig","lf":"1. HNL","lt":"Bundesliga","mv":19000000.0,"fee":36800000.0,"fs":null,"cur":"EUR"},{"p":"Enzo Fernández","s":"22/23","sy":2022,"nat":"Argentina","pos":"Mediocentro","age":22.0,"cf":"Benfica","ct":"Chelsea","lf":null,"lt":null,"mv":55000000.0,"fee":121000000.0,"fs":null,"cur":"EUR"},{"p":"Antony","s":"22/23","sy":2022,"nat":"Brasil","pos":"Extremo derecho","age":22.0,"cf":"Ajax","ct":"Manchester Utd.","lf":null,"lt":null,"mv":35000000.0,"fee":95000000.0,"fs":null,"cur":"EUR"},{"p":"Darwin Núñez","s":"22/23","sy":2022,"nat":"Uruguay","pos":"Delantero centro","age":23.0,"cf":"Benfica","ct":"Liverpool","lf":null,"lt":null,"mv":55000000.0,"fee":85000000.0,"fs":null,"cur":"EUR"},{"p":"Wesley Fofana","s":"22/23","sy":2022,"nat":"Francia","pos":"Defensa central","age":21.0,"cf":"Leicester City","ct":"Chelsea","lf":null,"lt":null,"mv":40000000.0,"fee":80400000.0,"fs":null,"cur":"EUR"},{"p":"Aurélien Tchouaméni","s":"22/23","sy":2022,"nat":"Francia","pos":"Pivote","age":22.0,"cf":"Mónaco","ct":"Real Madrid","lf":null,"lt":null,"mv":60000000.0,"fee":80000000.0,"fs":null,"cur":"EUR"},{"p":"Alexander Isak","s":"22/23","sy":2022,"nat":"Suecia","pos":"Delantero centro","age":22.0,"cf":"Real Sociedad","ct":"Newcastle","lf":null,"lt":null,"mv":30000000.0,"fee":77500000.0,"fs":null,"cur":"EUR"},{"p":"Casemiro","s":"22/23","sy":2022,"nat":"Brasil","pos":"Pivote","age":30.0,"cf":"Real Madrid","ct":"Manchester Utd.","lf":null,"lt":null,"mv":40000000.0,"fee":70650000.0,"fs":null,"cur":"EUR"},{"p":"Mykhaylo Mudryk","s":"22/23","sy":2022,"nat":"Ucrania","pos":"Extremo izquierdo","age":22.0,"cf":"Shakhtar D.","ct":"Chelsea","lf":null,"lt":null,"mv":40000000.0,"fee":70000000.0,"fs":null,"cur":"EUR"},{"p":"Matthijs de Ligt","s":"22/23","sy":2022,"nat":"Países Bajos","pos":"Defensa central","age":22.0,"cf":"Juventus","ct":"Bayern","lf":null,"lt":null,"mv":70000000.0,"fee":67000000.0,"fs":null,"cur":"EUR"},{"p":"Marc Cucurella","s":"22/23","sy":2022,"nat":"España","pos":"Lateral izquierdo","age":24.0,"cf":"Brighton","ct":"Chelsea","lf":null,"lt":null,"mv":28000000.0,"fee":65300000.0,"fs":null,"cur":"EUR"},{"p":"Erling Haaland","s":"22/23","sy":2022,"nat":"Noruega","pos":"Delantero centro","age":21.0,"cf":"Dortmund","ct":"Man. City","lf":null,"lt":null,"mv":150000000.0,"fee":60000000.0,"fs":null,"cur":"EUR"},{"p":"Raphinha","s":"22/23","sy":2022,"nat":"Brasil","pos":"Extremo izquierdo","age":25.0,"cf":"Leeds","ct":"FC Barcelona","lf":null,"lt":null,"mv":45000000.0,"fee":58000000.0,"fs":null,"cur":"EUR"},{"p":"Richarlison","s":"22/23","sy":2022,"nat":"Brasil","pos":"Delantero centro","age":25.0,"cf":"Everton","ct":"Tottenham","lf":null,"lt":null,"mv":48000000.0,"fee":58000000.0,"fs":null,"cur":"EUR"},{"p":"Lisandro Martínez","s":"22/23","sy":2022,"nat":"Argentina","pos":"Defensa central","age":24.0,"cf":"Ajax","ct":"Manchester Utd.","lf":null,"lt":null,"mv":32000000.0,"fee":57370000.0,"fs":null,"cur":"EUR"},{"p":"Raheem Sterling","s":"22/23","sy":2022,"nat":"Inglaterra","pos":"Extremo derecho","age":27.0,"cf":"Man. City","ct":"Chelsea","lf":null,"lt":null,"mv":70000000.0,"fee":56200000.0,"fs":null,"cur":"EUR"}];
+const RATES = {"EUR": {"2005": 2.2, "2006": 2.2, "2007": 2.1, "2008": 3.3, "2009": 0.3, "2010": 1.6, "2011": 2.7, "2012": 2.5, "2013": 1.3, "2014": 0.4, "2015": 0.2, "2016": 0.2, "2017": 1.5, "2018": 1.8, "2019": 1.2, "2020": 0.3, "2021": 2.6, "2022": 8.4, "2023": 5.4, "2024": 2.4, "2025": 2.2, "2026": 1.0}, "USD": {"2005": 3.4, "2006": 3.2, "2007": 2.8, "2008": 3.8, "2009": -0.4, "2010": 1.6, "2011": 3.2, "2012": 2.1, "2013": 1.5, "2014": 1.6, "2015": 0.1, "2016": 1.3, "2017": 2.1, "2018": 2.4, "2019": 1.8, "2020": 1.2, "2021": 4.7, "2022": 8.0, "2023": 4.1, "2024": 2.9, "2025": 2.9, "2026": 1.4}, "CLP": {"2005": 3.7, "2006": 2.6, "2007": 7.8, "2008": 7.1, "2009": -1.4, "2010": 3.0, "2011": 4.4, "2012": 1.5, "2013": 3.0, "2014": 4.6, "2015": 4.4, "2016": 2.7, "2017": 2.3, "2018": 2.6, "2019": 3.0, "2020": 3.0, "2021": 7.2, "2022": 12.8, "2023": 3.9, "2024": 4.5, "2025": 4.0, "2026": 1.8}};
+
+</script>
+<script>
+const FX = { EUR: 1, USD: 1.09, CLP: 1080 };
+const FX_LABEL = { EUR:'EUR', USD:'USD', CLP:'CLP' };
+const SYMBOL = { EUR:'€', USD:'US$', CLP:'CLP$' };
+const CURRENT_YEAR = 2026;
+const PARTIAL_2026_FRACTION = 0.5; // ~junio 2026
+
+function multiplier(seasonYear, currency){
+  const table = RATES[currency];
+  let m = 1;
+  for(let y = seasonYear + 1; y <= CURRENT_YEAR; y++){
+    const rate = table[y] !== undefined ? table[y] : 2.0;
+    const applied = (y === CURRENT_YEAR) ? rate * PARTIAL_2026_FRACTION : rate;
+    m *= (1 + applied/100);
+  }
+  return m;
+}
+
+function todayValue(rec, currency){
+  if(!rec.fee) return null;
+  const mEur = multiplier(rec.sy, 'EUR');
+  const valueEur = rec.fee * mEur;
+  return { value: valueEur * FX[currency], multiplier: mEur, valueEur };
+}
+
+function fmtMoney(n, currency){
+  if(n === null || n === undefined || isNaN(n)) return '—';
+  const rounded = currency === 'CLP' ? Math.round(n/1000)*1000 : Math.round(n);
+  const s = rounded.toLocaleString('es-ES');
+  return SYMBOL[currency] + ' ' + s;
+}
+
+function fmtMult(m){
+  return 'x' + m.toFixed(3).replace('.', ',');
+}
+
+function seasonsList(){
+  const seasons = [...new Set(DATA.map(r=>r.s))];
+  seasons.sort((a,b)=> a.localeCompare(b));
+  return seasons;
+}
+
+let state = { currency:'EUR', search:'', from:null, to:null, pos:'', sortKey:'today', sortDir:-1, openRow:null };
+
+function applyFilters(){
+  return DATA.filter(r=>{
+    if(state.search){
+      const q = state.search.toLowerCase();
+      const hay = (r.p + ' ' + r.cf + ' ' + r.ct).toLowerCase();
+      if(!hay.includes(q)) return false;
+    }
+    if(state.from && r.s < state.from) return false;
+    if(state.to && r.s > state.to) return false;
+    if(state.pos && r.pos !== state.pos) return false;
+    return true;
+  });
+}
+
+function computeRows(){
+  const filtered = applyFilters();
+  const rows = filtered.map(r=>{
+    const tv = todayValue(r, state.currency);
+    return { r, tv };
+  });
+  rows.sort((a,b)=>{
+    let av, bv;
+    switch(state.sortKey){
+      case 'p': av=a.r.p; bv=b.r.p; break;
+      case 's': av=a.r.s; bv=b.r.s; break;
+      case 'ct': av=a.r.ct; bv=b.r.ct; break;
+      case 'mv': av=a.r.mv||0; bv=b.r.mv||0; break;
+      case 'fee': av=a.r.fee||0; bv=b.r.fee||0; break;
+      case 'mult': av=a.tv?a.tv.multiplier:0; bv=b.tv?b.tv.multiplier:0; break;
+      default: av=a.tv?a.tv.value:0; bv=b.tv?b.tv.value:0;
+    }
+    if(typeof av === 'string') return av.localeCompare(bv) * state.sortDir;
+    return (av - bv) * state.sortDir;
+  });
+  return rows;
+}
+
+function detailText(r, tv){
+  if(!tv) return `<em>${r.p}</em> tuvo un movimiento sin coste de traspaso registrado en euros (cesión, fin de contrato o retiro), por lo que no se calcula un valor presente.`;
+  const pct = ((tv.multiplier - 1) * 100).toFixed(1).replace('.', ',');
+  return `Tratado con la inflación acumulada año a año de la Eurozona desde ${r.sy + 1} hasta hoy, sufriendo un ajuste total de <em>+${pct}%</em>. Pagado ${fmtMoney(r.fee,'EUR')} en la temporada ${r.s}, equivalente hoy a <em>${fmtMoney(tv.value, state.currency)}</em>.`;
+}
+
+function renderTable(){
+  const tbody = document.getElementById('table-body');
+  const rows = computeRows();
+  document.getElementById('result-count').textContent = `${rows.length} fichaje${rows.length===1?'':'s'} encontrado${rows.length===1?'':'s'}`;
+  tbody.innerHTML = '';
+  rows.forEach((row, i)=>{
+    const { r, tv } = row;
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td class="rank">${i+1}</td>
+      <td class="player">${r.p}<span class="sub">${r.pos||''} · ${r.nat||''}</span></td>
+      <td class="season">${r.s}</td>
+      <td class="clubs">${r.cf||'—'} → <b>${r.ct||'—'}</b></td>
+      <td class="num">${fmtMoney(r.mv,'EUR')}</td>
+      <td class="num">${r.fee ? fmtMoney(r.fee,'EUR') : (r.fs||'—')}</td>
+      <td class="mult">${tv ? fmtMult(tv.multiplier) : '—'}</td>
+      <td class="today">${tv ? fmtMoney(tv.value, state.currency) : '—'}</td>
+    `;
+    tr.addEventListener('click', ()=>{
+      state.openRow = (state.openRow === i) ? null : i;
+      renderTable();
+    });
+    tbody.appendChild(tr);
+    if(state.openRow === i){
+      const dtr = document.createElement('tr');
+      dtr.className = 'detail-row';
+      dtr.innerHTML = `<td colspan="8"><div class="detail-inner">${detailText(r, tv)}</div></td>`;
+      tbody.appendChild(dtr);
+    }
+  });
+}
+
+function renderHero(){
+  const all = DATA.map(r=>({r, tv:todayValue(r,'EUR')})).filter(x=>x.tv);
+  all.sort((a,b)=> b.tv.value - a.tv.value);
+  const top = all[0];
+  document.getElementById('hero-player').textContent = `${top.r.p} · ${top.r.cf} → ${top.r.ct}`;
+  document.getElementById('hero-meta').textContent = `Temporada ${top.r.s} · pagado ${fmtMoney(top.r.fee,'EUR')} · multiplicador ${fmtMult(top.tv.multiplier)}`;
+  const targetVal = todayValue(top.r, state.currency).value;
+  animateNumber(document.getElementById('hero-number-val'), targetVal, state.currency);
+
+  const totalFee = DATA.reduce((s,r)=> s + (r.fee||0), 0);
+  const totalToday = DATA.reduce((s,r)=>{ const tv = todayValue(r,'EUR'); return s + (tv? r.fee*tv.multiplier : 0); }, 0);
+  const strip = document.getElementById('stat-strip');
+  strip.innerHTML = `
+    <div class="item"><div class="n">315</div><div class="l">Fichajes analizados</div></div>
+    <div class="item"><div class="n">21</div><div class="l">Temporadas (05/06–25/26)</div></div>
+    <div class="item"><div class="n">${fmtMoney(totalFee*FX[state.currency],state.currency)}</div><div class="l">Invertido en su momento</div></div>
+    <div class="item"><div class="n">${fmtMoney(totalToday*FX[state.currency],state.currency)}</div><div class="l">Equivalente hoy</div></div>
+  `;
+}
+
+function animateNumber(el, target, currency){
+  const start = 0;
+  const dur = 900;
+  const t0 = performance.now();
+  function step(t){
+    const p = Math.min(1, (t - t0)/dur);
+    const eased = 1 - Math.pow(1-p, 3);
+    el.textContent = fmtMoney(start + (target-start)*eased, currency);
+    if(p < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+function populateFilters(){
+  const seasons = seasonsList();
+  const fFrom = document.getElementById('f-from');
+  const fTo = document.getElementById('f-to');
+  seasons.forEach(s=>{
+    fFrom.innerHTML += `<option value="${s}">${s}</option>`;
+    fTo.innerHTML += `<option value="${s}">${s}</option>`;
+  });
+  fTo.value = seasons[seasons.length-1];
+
+  const positions = [...new Set(DATA.map(r=>r.pos).filter(Boolean))].sort();
+  const fPos = document.getElementById('f-pos');
+  positions.forEach(p=> fPos.innerHTML += `<option value="${p}">${p}</option>`);
+
+  document.getElementById('f-search').addEventListener('input', e=>{ state.search = e.target.value.trim(); renderTable(); });
+  fFrom.addEventListener('change', e=>{ state.from = e.target.value || null; renderTable(); });
+  fTo.addEventListener('change', e=>{ state.to = e.target.value || null; renderTable(); });
+  fPos.addEventListener('change', e=>{ state.pos = e.target.value; renderTable(); });
+}
+
+function setupSort(){
+  document.querySelectorAll('table.ledger thead th').forEach(th=>{
+    th.addEventListener('click', ()=>{
+      const key = th.dataset.key;
+      if(key === 'rank') return;
+      if(state.sortKey === key){ state.sortDir *= -1; } else { state.sortKey = key; state.sortDir = -1; }
+      document.querySelectorAll('table.ledger thead th').forEach(h=>h.classList.remove('active'));
+      th.classList.add('active');
+      state.openRow = null;
+      renderTable();
+    });
+  });
+}
+
+function setupCurrencyToggle(){
+  document.querySelectorAll('#curr-toggle button').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      document.querySelectorAll('#curr-toggle button').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      state.currency = btn.dataset.cur;
+      renderHero();
+      renderTable();
+      renderComparator();
+    });
+  });
+}
+
+function populateComparator(){
+  const a = document.getElementById('cmp-a');
+  const b = document.getElementById('cmp-b');
+  const sorted = [...DATA].filter(r=>r.fee).sort((x,y)=> x.p.localeCompare(y.p));
+  sorted.forEach((r, idx)=>{
+    const label = `${r.p} (${r.s}, ${r.ct})`;
+    a.innerHTML += `<option value="${idx}">${label}</option>`;
+    b.innerHTML += `<option value="${idx}">${label}</option>`;
+  });
+  window.__cmpList = sorted;
+  const idxA = sorted.findIndex(r=>r.p==='Neymar' && r.s==='17/18');
+  const idxB = sorted.findIndex(r=>r.p==='Cristiano Ronaldo' && r.s==='09/10');
+  a.selectedIndex = idxA >= 0 ? idxA : 0;
+  b.selectedIndex = idxB >= 0 ? idxB : 1;
+  a.addEventListener('change', renderComparator);
+  b.addEventListener('change', renderComparator);
+}
+
+function cardHTML(r, tv, isWinner){
+  return `
+    <div class="cmp-card ${isWinner?'winner':''}">
+      <div class="name">${r.p}</div>
+      <div class="tag">${r.cf} → ${r.ct} · temporada ${r.s}</div>
+      <div class="big">${fmtMoney(tv.value, state.currency)}</div>
+      <div class="rowline"><span>Precio pagado (original, EUR)</span><span>${fmtMoney(r.fee,'EUR')}</span></div>
+      <div class="rowline"><span>Multiplicador acumulado</span><span>${fmtMult(tv.multiplier)}</span></div>
+      <div class="rowline"><span>Ajuste total</span><span>+${((tv.multiplier-1)*100).toFixed(1).replace('.', ',')}%</span></div>
+    </div>
+  `;
+}
+
+function renderComparator(){
+  const a = window.__cmpList[document.getElementById('cmp-a').value];
+  const b = window.__cmpList[document.getElementById('cmp-b').value];
+  if(!a || !b) return;
+  const tvA = todayValue(a, state.currency);
+  const tvB = todayValue(b, state.currency);
+  const aWins = tvA.value >= tvB.value;
+  document.getElementById('cmp-cards').innerHTML = cardHTML(a, tvA, aWins) + cardHTML(b, tvB, !aWins);
+  const winner = aWins ? a : b;
+  const loser = aWins ? b : a;
+  const winnerTv = aWins ? tvA : tvB;
+  const loserTv = aWins ? tvB : tvA;
+  const diff = winnerTv.value - loserTv.value;
+  const diffPct = ((winnerTv.value/loserTv.value - 1)*100).toFixed(1).replace('.', ',');
+  document.getElementById('cmp-conclusion').innerHTML = `Una vez indexados ambos fichajes a euros constantes de 2026 y convertidos a ${FX_LABEL[state.currency]}, <b>${winner.p}</b> (${winner.s}) representó el mayor esfuerzo financiero real, superando a <b>${loser.p}</b> (${loser.s}) por ${fmtMoney(diff, state.currency)} — un ${diffPct}% más en términos de poder de compra actual.`;
+}
+
+function renderMethodPanels(){
+  const years = [];
+  for(let y=2005; y<=2026; y++) years.push(y);
+  let rows = years.map(y=>{
+    const eur = RATES.EUR[y]!==undefined?RATES.EUR[y]:'—';
+    const usd = RATES.USD[y]!==undefined?RATES.USD[y]:'—';
+    const clp = RATES.CLP[y]!==undefined?RATES.CLP[y]:'—';
+    const tag = y===2026 ? ' (parcial, ~jun.)' : '';
+    return `<tr><td>${y}${tag}</td><td>${eur}%</td><td>${usd}%</td><td>${clp}%</td></tr>`;
+  }).join('');
+  document.getElementById('rates-panel').innerHTML = `
+    <table class="rate-table">
+      <thead><tr><th>Año</th><th>Eurozona (EUR)</th><th>EE. UU. (USD)</th><th>Chile (CLP)</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table>
+    <p class="note">Fuente de referencia: Eurostat (HICP), U.S. BLS (CPI-U), INE Chile (IPC) — series próximas a las publicadas en global-rates.com.</p>
+  `;
+  document.getElementById('fx-panel').innerHTML = `
+    <table class="rate-table">
+      <thead><tr><th>Par</th><th>Tipo de cambio referencial</th></tr></thead>
+      <tbody>
+        <tr><td>EUR → USD</td><td>1 € ≈ ${FX.USD} US$</td></tr>
+        <tr><td>EUR → CLP</td><td>1 € ≈ ${FX.CLP.toLocaleString('es-ES')} CLP$</td></tr>
+      </tbody>
+    </table>
+    <p class="note">Tipos de cambio de referencia (junio 2026). Se aplican únicamente para mostrar el valor ya ajustado por inflación en otra divisa, nunca para mezclar inflación entre monedas.</p>
+  `;
+}
+
+populateFilters();
+setupSort();
+setupCurrencyToggle();
+populateComparator();
+renderMethodPanels();
+renderHero();
+renderTable();
+renderComparator();
+
+</script>
+</body>
+</html>
